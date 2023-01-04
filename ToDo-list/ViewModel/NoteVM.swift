@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import CoreData
 
 enum Status: String {
     case encours = "en cours"
@@ -14,7 +15,7 @@ enum Status: String {
 }
 
 class NoteVM: ObservableObject {
-    @Environment(\.managedObjectContext) private var  viewContext
+    @Environment(\.managedObjectContext) var  viewContext
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Note.timestamp, ascending: true), NSSortDescriptor(keyPath: \Note.title, ascending: true), NSSortDescriptor(keyPath: \Note.descriptif, ascending: true), NSSortDescriptor(keyPath: \Note.status, ascending: true), NSSortDescriptor(keyPath: \Note.favoris, ascending: true)],
@@ -34,6 +35,19 @@ class NoteVM: ObservableObject {
             newNote.updateName = String()
             newNote.updateTime = Date.now
             
+            do {
+                try viewContext.save()
+            } catch {
+                let nsError = error as NSError
+                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            }
+        }
+    }
+    
+    func deleteNotes(offsets: IndexSet) {
+        withAnimation {
+            offsets.map { notes[$0] }.forEach(viewContext.delete)
+
             do {
                 try viewContext.save()
             } catch {

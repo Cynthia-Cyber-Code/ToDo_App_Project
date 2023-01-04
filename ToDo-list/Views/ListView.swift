@@ -9,54 +9,102 @@ import SwiftUI
 import CoreData
 
 struct ListView: View {
-    @Environment(\.managedObjectContext) private var  viewContext
+    let notificationManager: NotificationManager
+    @Environment(\.managedObjectContext) var viewContext
+       
+    @FetchRequest(entity: Note.entity(), sortDescriptors: [ NSSortDescriptor(keyPath: \Note.order, ascending: true)], animation: .default)
+    var notes: FetchedResults<Note>
 
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Note.timestamp, ascending: true), NSSortDescriptor(keyPath: \Note.title, ascending: true), NSSortDescriptor(keyPath: \Note.descriptif, ascending: true), NSSortDescriptor(keyPath: \Note.status, ascending: true), NSSortDescriptor(keyPath: \Note.favoris, ascending: true)],
-        animation: .default)
-  var notes: FetchedResults<Note>
-    
     @State var isAddPresented = false
 
     var body: some View {
         NavigationView {
-            List {
-                ForEach(notes, id: \.self) { note in
-                    NavigationLink {
-                        DetailNote(title: note.title!)
-                    } label: {
-                        VStack{
-                            Text(note.title ?? "error")
-                            Text(note.descriptif ?? "error")
-                        }
-                    }
-                }
-                .onDelete(perform: deleteNotes)
-            }
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    
-                    HStack {
-                        Button {
-                            isAddPresented.toggle()
+            VStack {
+                List {
+                    ForEach(notes, id: \.self) { note in
+                        NavigationLink {
+                            DetailNote(title: note.title!)
                         } label: {
-                            Image(systemName: "plus")
+                            VStack{
+                                Text(note.title ?? "error")
+                                Text("\(note.order)")
+                                Text(note.descriptif ?? "error")
+                            }
                         }
-                        .sheet(isPresented: $isAddPresented) {
-                            AddNoteView( isAddPresented: $isAddPresented)
-                        }
-                        Spacer()
-                        VStack {
-                        Text("To-Do list").font(.title).fontWeight(.bold).foregroundColor(.black)
                     }
-                        Spacer()
-                    
-                        EditButton().font(.title).fontWeight(.thin).foregroundColor(.black)
-                    }
-                    
+                    .onMove(perform: dragAndDropNotes)
+                    .onDelete(perform: deleteNotes)
                 }
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        
+                        HStack {
+                            Button {
+                                isAddPresented.toggle()
+                            } label: {
+                                Image(systemName: "plus")
+                            }
+                            .sheet(isPresented: $isAddPresented) {
+                                AddNoteView( isAddPresented: $isAddPresented)
+                            }
+                            Spacer()
+                            VStack {
+                                Text("To-Do list").font(.title).fontWeight(.bold).foregroundColor(.black)
+                            }
+                            Spacer()
+                            
+                            EditButton().font(.title).fontWeight(.thin).foregroundColor(.black)
+                        }
+                        
+                    }
+                }
+                VStack {
+                    Text("Notification will appear in 10 sec")
+                    Button(action: scheduleNotification) {
+                        Text("Schedule notification")
+                    }
+                    .padding()
+                    //                }
+                    .padding()
+                    
+                }.navigationBarTitle("Tasks")
+            }
+        }
+    }
+    private func dragAndDropNotes(offsets: IndexSet, destination: Int) {
+        
+        let itemToMove = offsets.first!
+        withAnimation {
+            if itemToMove < destination {
+                var startIndex = itemToMove + 1
+                let endIndex = destination - 1
+                var startOrder = notes[itemToMove].order
                 
-            }.navigationBarTitle("Tasks")
+                while startIndex <= endIndex {
+                    notes[startIndex].order = startOrder
+                    startOrder = startOrder + 1
+                    startIndex = startIndex + 1
+                }
+                notes[itemToMove].order = startOrder
+            } else if destination < itemToMove {
+                var startIndex = destination
+                let endIndex = itemToMove - 1
+                var startOrder = notes[destination].order + 1
+                let newOrder = notes[destination].order
+                
+                while startIndex <= endIndex {
+                    notes[startIndex].order = startOrder
+                    startOrder = startOrder + 1
+                    startIndex = startIndex + 1
+                }
+                notes[itemToMove].order = newOrder
+                
+            }
+            do {
+                try viewContext.save()
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
 
@@ -72,10 +120,30 @@ struct ListView: View {
             }
         }
     }
+    private func scheduleNotification() {
+        let notificationId = UUID()
+        let content = UNMutableNotificationContent()
+        content.body = "New notification \(notificationId)"
+        content.sound = UNNotificationSound.default
+        content.userInfo = [
+            "notificationId": "\(notificationId)" // additional info to parse if need
+        ]
+
+        let trigger = UNCalendarNotificationTrigger(
+                dateMatching: NotificationHelper.getTriggerDate()!,
+                repeats: false
+        )
+
+        notificationManager.scheduleNotification(
+                id: "\(notificationId)",
+                content: content,
+                trigger: trigger)
+    }
 }
 
 struct ListView_Previews: PreviewProvider {
+
     static var previews: some View {
-        ListView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        ListView(notificationManager: NotificationManager()).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

@@ -12,11 +12,11 @@ struct AddNoteView: View {
     @Environment(\.managedObjectContext) var viewContext
     
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Note.timestamp, ascending: true), NSSortDescriptor(keyPath: \Note.title, ascending: true), NSSortDescriptor(keyPath: \Note.descriptif, ascending: true), NSSortDescriptor(keyPath: \Note.status, ascending: true), NSSortDescriptor(keyPath: \Note.favoris, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Note.timestamp, ascending: true), NSSortDescriptor(keyPath: \Note.order, ascending: true), NSSortDescriptor(keyPath: \Note.title, ascending: true), NSSortDescriptor(keyPath: \Note.descriptif, ascending: true), NSSortDescriptor(keyPath: \Note.status, ascending: true), NSSortDescriptor(keyPath: \Note.favoris, ascending: true)],
         animation: .default)
     
     var notes: FetchedResults<Note>
-//    @StateObject var noteVm: NoteVM = NoteVM()
+
     @Binding var isAddPresented: Bool
     
     @State var title: String = "Title"
@@ -74,11 +74,12 @@ struct AddNoteView: View {
             .listStyle(.plain)
         }
     }
-    func addNote() {
+  private func addNote() {
         withAnimation {
             let newNote = Note(context: viewContext)
             newNote.timestamp = Date.now
             newNote.title = title
+            newNote.order = notes.last!.order + 1
             newNote.status = status.rawValue
             newNote.date = date
             newNote.descriptif = description
@@ -100,6 +101,5 @@ struct AddNoteView: View {
 struct AddNoteView_Previews: PreviewProvider {
     static var previews: some View {
         AddNoteView(isAddPresented: .constant(true))
-//            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

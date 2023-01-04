@@ -17,6 +17,7 @@ struct PersistenceController {
         let newNote = Note(context: viewContext)
         newNote.timestamp = Date()
         newNote.title = "First task"
+        newNote.order = 0
         newNote.status = "en cours"
         newNote.date = Date.now
         newNote.descriptif = "description"
@@ -49,3 +50,4 @@ struct PersistenceController {
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
 }
+

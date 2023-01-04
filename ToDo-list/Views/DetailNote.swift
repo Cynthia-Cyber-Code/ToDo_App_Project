@@ -8,9 +8,19 @@
 import SwiftUI
 
 struct DetailNote: View {
+//    private let photo : String
     @State var title: String
     var body: some View {
-        Text(title)
+        VStack(alignment: .leading, spacing: 10) {
+//            photo
+//                .resizable()
+//                .scaledToFit()
+            Text(title)
+            ShareLink(item: title, preview: SharePreview(title))
+            
+        }
+        .padding(.horizontal)
+        
     }
 }
 

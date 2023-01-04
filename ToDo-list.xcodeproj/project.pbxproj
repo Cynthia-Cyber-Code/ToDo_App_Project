@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		DC853DD1296552D000FB1F30 /* AddNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC853DD0296552D000FB1F30 /* AddNoteView.swift */; };
 		DC853DD42965535000FB1F30 /* NoteVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC853DD32965535000FB1F30 /* NoteVM.swift */; };
+		DC853DD729658F3D00FB1F30 /* NoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC853DD629658F3D00FB1F30 /* NoteModel.swift */; };
+		DC853DD92965C11200FB1F30 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC853DD82965C11200FB1F30 /* NotificationManager.swift */; };
+		DC853DDB2965C14200FB1F30 /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC853DDA2965C14200FB1F30 /* NotificationHelper.swift */; };
 		DCF88BA129648F6C0032292B /* ToDo_listApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF88BA029648F6C0032292B /* ToDo_listApp.swift */; };
 		DCF88BA329648F6C0032292B /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF88BA229648F6C0032292B /* ListView.swift */; };
 		DCF88BA529648F6C0032292B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCF88BA429648F6C0032292B /* Assets.xcassets */; };
@@ -21,6 +24,9 @@
 /* Begin PBXFileReference section */
 		DC853DD0296552D000FB1F30 /* AddNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteView.swift; sourceTree = "<group>"; };
 		DC853DD32965535000FB1F30 /* NoteVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteVM.swift; sourceTree = "<group>"; };
+		DC853DD629658F3D00FB1F30 /* NoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteModel.swift; sourceTree = "<group>"; };
+		DC853DD82965C11200FB1F30 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		DC853DDA2965C14200FB1F30 /* NotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
 		DCF88B9D29648F6C0032292B /* ToDo-list.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ToDo-list.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCF88BA029648F6C0032292B /* ToDo_listApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo_listApp.swift; sourceTree = "<group>"; };
 		DCF88BA229648F6C0032292B /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
@@ -56,8 +62,18 @@
 			isa = PBXGroup;
 			children = (
 				DC853DD32965535000FB1F30 /* NoteVM.swift */,
+				DC853DD82965C11200FB1F30 /* NotificationManager.swift */,
+				DC853DDA2965C14200FB1F30 /* NotificationHelper.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		DC853DD529658EEC00FB1F30 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				DC853DD629658F3D00FB1F30 /* NoteModel.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		DCF88B9429648F6C0032292B = {
@@ -82,6 +98,7 @@
 				DCF88BA029648F6C0032292B /* ToDo_listApp.swift */,
 				DC853DCF296551EE00FB1F30 /* Views */,
 				DC853DD2296552DB00FB1F30 /* ViewModel */,
+				DC853DD529658EEC00FB1F30 /* Extension */,
 				DCF88BA429648F6C0032292B /* Assets.xcassets */,
 				DCF88BA929648F6C0032292B /* Persistence.swift */,
 				DCF88BAB29648F6C0032292B /* ToDo_list.xcdatamodeld */,
@@ -169,9 +186,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC853DD1296552D000FB1F30 /* AddNoteView.swift in Sources */,
+				DC853DD729658F3D00FB1F30 /* NoteModel.swift in Sources */,
 				DCF88BB42964A0010032292B /* DetailNote.swift in Sources */,
+				DC853DD92965C11200FB1F30 /* NotificationManager.swift in Sources */,
 				DC853DD42965535000FB1F30 /* NoteVM.swift in Sources */,
 				DCF88BAA29648F6C0032292B /* Persistence.swift in Sources */,
+				DC853DDB2965C14200FB1F30 /* NotificationHelper.swift in Sources */,
 				DCF88BA329648F6C0032292B /* ListView.swift in Sources */,
 				DCF88BA129648F6C0032292B /* ToDo_listApp.swift in Sources */,
 				DCF88BAD29648F6C0032292B /* ToDo_list.xcdatamodeld in Sources */,
