@@ -15,6 +15,7 @@ struct PersistenceController {
         let viewContext = result.container.viewContext
 //        for _ in 0..<10 {
         let newNote = Note(context: viewContext)
+        newNote.id = UUID()
         newNote.timestamp = Date()
         newNote.title = "First task"
         newNote.order = 0

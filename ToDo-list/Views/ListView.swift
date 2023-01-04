@@ -7,9 +7,15 @@
 
 import SwiftUI
 import CoreData
+import MobileCoreServices
 
+struct Item: Identifiable {
+    let id = UUID()
+    let title: String
+}
 struct ListView: View {
-    let notificationManager: NotificationManager
+    @State var url_selection: Set<UUID> = []
+    @State private var items: [Item] = []
     @Environment(\.managedObjectContext) var viewContext
        
     @FetchRequest(entity: Note.entity(), sortDescriptors: [ NSSortDescriptor(keyPath: \Note.order, ascending: true)], animation: .default)
@@ -23,16 +29,16 @@ struct ListView: View {
                 List {
                     ForEach(notes, id: \.self) { note in
                         NavigationLink {
-                            DetailNote(title: note.title!)
+                            DetailNote(notificationManager: NotificationManager(), title: note.title!, date: note.date!, description: note.descriptif!, order: note.order, id: note.id ?? UUID())
                         } label: {
-                            VStack{
+                            VStack(alignment: .leading){
                                 Text(note.title ?? "error")
-                                Text("\(note.order)")
-                                Text(note.descriptif ?? "error")
+                                Text("\(note.date!.formatted(date: .abbreviated, time: .standard))")
                             }
                         }
                     }
-                    .onMove(perform: dragAndDropNotes)
+                    
+                    .onMove(perform: moveNotes)
                     .onDelete(perform: deleteNotes)
                 }
                 .toolbar {
@@ -57,21 +63,11 @@ struct ListView: View {
                         }
                         
                     }
-                }
-                VStack {
-                    Text("Notification will appear in 10 sec")
-                    Button(action: scheduleNotification) {
-                        Text("Schedule notification")
-                    }
-                    .padding()
-                    //                }
-                    .padding()
-                    
                 }.navigationBarTitle("Tasks")
             }
         }
     }
-    private func dragAndDropNotes(offsets: IndexSet, destination: Int) {
+    private func moveNotes(offsets: IndexSet, destination: Int) {
         
         let itemToMove = offsets.first!
         withAnimation {
@@ -120,30 +116,11 @@ struct ListView: View {
             }
         }
     }
-    private func scheduleNotification() {
-        let notificationId = UUID()
-        let content = UNMutableNotificationContent()
-        content.body = "New notification \(notificationId)"
-        content.sound = UNNotificationSound.default
-        content.userInfo = [
-            "notificationId": "\(notificationId)" // additional info to parse if need
-        ]
-
-        let trigger = UNCalendarNotificationTrigger(
-                dateMatching: NotificationHelper.getTriggerDate()!,
-                repeats: false
-        )
-
-        notificationManager.scheduleNotification(
-                id: "\(notificationId)",
-                content: content,
-                trigger: trigger)
-    }
 }
 
 struct ListView_Previews: PreviewProvider {
 
     static var previews: some View {
-        ListView(notificationManager: NotificationManager()).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        ListView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

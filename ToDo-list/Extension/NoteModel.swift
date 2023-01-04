@@ -18,9 +18,6 @@ struct NoteModel: Identifiable {
     var id: NSManagedObjectID {
         task.objectID
     }
-    var date: Date {
-        task.date!
-    }
     var status: Status {
         Status(rawValue: task.status!) ?? .encours
     }

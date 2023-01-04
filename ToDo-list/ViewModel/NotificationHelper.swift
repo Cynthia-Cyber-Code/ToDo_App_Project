@@ -10,8 +10,9 @@ import SwiftUI
 import UserNotifications
 
 class NotificationHelper {
-    static func getTriggerDate() -> DateComponents? {
-        let triggerDate =  Date().addingTimeInterval(10)
+    static func getTriggerDate(date: Date) -> DateComponents? {
+        let triggerDate = date
+        //Date().addingTimeInterval(5)
         return Calendar.current.dateComponents([.timeZone, .year, .month, .day, .hour, .minute, .second], from: triggerDate)
     }
 }

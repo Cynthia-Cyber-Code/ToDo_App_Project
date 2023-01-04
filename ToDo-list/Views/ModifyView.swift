@@ -1,28 +1,30 @@
 //
-//  AddNoteView.swift
+//  ModifyView.swift
 //  ToDo-list
 //
 //  Created by Cynthia on 04/01/2023.
 //
 
 import SwiftUI
-import CoreData
 
-struct AddNoteView: View {
+struct ModifyView: View {
     @Environment(\.managedObjectContext) var viewContext
     
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Note.timestamp, ascending: true), NSSortDescriptor(keyPath: \Note.order, ascending: true), NSSortDescriptor(keyPath: \Note.title, ascending: true), NSSortDescriptor(keyPath: \Note.descriptif, ascending: true), NSSortDescriptor(keyPath: \Note.status, ascending: true), NSSortDescriptor(keyPath: \Note.favoris, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Note.id, ascending: true)],
         animation: .default)
     
     var notes: FetchedResults<Note>
 
     @Binding var isAddPresented: Bool
     
-    @State var title: String = "Title"
-    @State var description: String = "description"
-    @State var date: Date = Date.now
+    @State var title: String
+    @State var description: String
+    @State var date: Date
+    @State var order: Int64
     @State var status: Status = .encours
+    @State var id: UUID
+    
     var body: some View {
         VStack {
             Form {
@@ -58,7 +60,6 @@ struct AddNoteView: View {
             
             Button {
                 addNote()
-//                noteVm.addItem(title: title, status: status.rawValue, date: date, description: description)
                 isAddPresented.toggle()
             } label: {
                 HStack{
@@ -74,24 +75,20 @@ struct AddNoteView: View {
             .listStyle(.plain)
         }
     }
-  private func addNote() {
+    private func addNote() {
         withAnimation {
-            let newNote = Note(context: viewContext)
-            newNote.timestamp = Date.now
-            newNote.title = title
-            if (notes.last == nil)
-            {
-                newNote.order = 0
-            } else {
-                newNote.order = notes.last!.order + 1
-            }
-            newNote.status = status.rawValue
-            newNote.date = date
-            newNote.descriptif = description
-            newNote.favoris = false
-            newNote.noteUser = String()
-            newNote.updateName = String()
-            newNote.updateTime = Date.now
+            let note = Note(context: viewContext)
+            note.id = id
+            note.timestamp = Date.now
+            note.title = title
+            note.order = order
+            note.status = status.rawValue
+            note.date = date
+            note.descriptif = description
+            note.favoris = false
+            note.noteUser = String()
+            note.updateName = String()
+            note.updateTime = Date.now
             
             do {
                 try viewContext.save()
@@ -103,8 +100,8 @@ struct AddNoteView: View {
     }
 }
 
-struct AddNoteView_Previews: PreviewProvider {
+struct ModifyView_Previews: PreviewProvider {
     static var previews: some View {
-        AddNoteView(isAddPresented: .constant(true))
+        ModifyView(isAddPresented: .constant(true), title: "", description: "", date: Date.now, order: 0, id: UUID())
     }
 }
