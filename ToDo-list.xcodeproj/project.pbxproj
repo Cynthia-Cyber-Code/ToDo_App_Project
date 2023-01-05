@@ -14,8 +14,14 @@
 		DC853DDB2965C14200FB1F30 /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC853DDA2965C14200FB1F30 /* NotificationHelper.swift */; };
 		DC853DDD2965CE7300FB1F30 /* ModifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC853DDC2965CE7300FB1F30 /* ModifyView.swift */; };
 		DC853DDF2965E46100FB1F30 /* SeachView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC853DDE2965E46100FB1F30 /* SeachView.swift */; };
+		DCCC9D7C2967242200B79F5E /* TabBarCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC9D7B2967242200B79F5E /* TabBarCustomView.swift */; };
+		DCCC9D7E296725A800B79F5E /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC9D7D296725A800B79F5E /* TabBarView.swift */; };
+		DCCC9D8229672F9F00B79F5E /* ButtonAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC9D8129672F9F00B79F5E /* ButtonAdd.swift */; };
+		DCCC9D842967304700B79F5E /* BarTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC9D832967304700B79F5E /* BarTitleView.swift */; };
+		DCCC9D862967323000B79F5E /* CardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC9D852967323000B79F5E /* CardsView.swift */; };
+		DCCC9D882967346300B79F5E /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC9D872967346300B79F5E /* ListView.swift */; };
 		DCF88BA129648F6C0032292B /* ToDo_listApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF88BA029648F6C0032292B /* ToDo_listApp.swift */; };
-		DCF88BA329648F6C0032292B /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF88BA229648F6C0032292B /* ListView.swift */; };
+		DCF88BA329648F6C0032292B /* ListCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF88BA229648F6C0032292B /* ListCardsView.swift */; };
 		DCF88BA529648F6C0032292B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCF88BA429648F6C0032292B /* Assets.xcassets */; };
 		DCF88BA829648F6C0032292B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCF88BA729648F6C0032292B /* Preview Assets.xcassets */; };
 		DCF88BAA29648F6C0032292B /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF88BA929648F6C0032292B /* Persistence.swift */; };
@@ -31,9 +37,15 @@
 		DC853DDA2965C14200FB1F30 /* NotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
 		DC853DDC2965CE7300FB1F30 /* ModifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyView.swift; sourceTree = "<group>"; };
 		DC853DDE2965E46100FB1F30 /* SeachView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeachView.swift; sourceTree = "<group>"; };
+		DCCC9D7B2967242200B79F5E /* TabBarCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCustomView.swift; sourceTree = "<group>"; };
+		DCCC9D7D296725A800B79F5E /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
+		DCCC9D8129672F9F00B79F5E /* ButtonAdd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonAdd.swift; sourceTree = "<group>"; };
+		DCCC9D832967304700B79F5E /* BarTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarTitleView.swift; sourceTree = "<group>"; };
+		DCCC9D852967323000B79F5E /* CardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsView.swift; sourceTree = "<group>"; };
+		DCCC9D872967346300B79F5E /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		DCF88B9D29648F6C0032292B /* ToDo-list.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ToDo-list.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCF88BA029648F6C0032292B /* ToDo_listApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo_listApp.swift; sourceTree = "<group>"; };
-		DCF88BA229648F6C0032292B /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
+		DCF88BA229648F6C0032292B /* ListCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCardsView.swift; sourceTree = "<group>"; };
 		DCF88BA429648F6C0032292B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DCF88BA729648F6C0032292B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DCF88BA929648F6C0032292B /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -55,7 +67,9 @@
 		DC853DCF296551EE00FB1F30 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				DCF88BA229648F6C0032292B /* ListView.swift */,
+				DCF88BA229648F6C0032292B /* ListCardsView.swift */,
+				DCCC9D8029672F8000B79F5E /* Components */,
+				DCCC9D7F296725AD00B79F5E /* TabBar */,
 				DC853DDE2965E46100FB1F30 /* SeachView.swift */,
 				DCF88BB32964A0010032292B /* DetailNote.swift */,
 				DC853DD0296552D000FB1F30 /* AddNoteView.swift */,
@@ -80,6 +94,26 @@
 				DC853DD629658F3D00FB1F30 /* NoteModel.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		DCCC9D7F296725AD00B79F5E /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				DCCC9D7D296725A800B79F5E /* TabBarView.swift */,
+				DCCC9D7B2967242200B79F5E /* TabBarCustomView.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		DCCC9D8029672F8000B79F5E /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				DCCC9D8129672F9F00B79F5E /* ButtonAdd.swift */,
+				DCCC9D832967304700B79F5E /* BarTitleView.swift */,
+				DCCC9D852967323000B79F5E /* CardsView.swift */,
+				DCCC9D872967346300B79F5E /* ListView.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		DCF88B9429648F6C0032292B = {
@@ -191,7 +225,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCCC9D842967304700B79F5E /* BarTitleView.swift in Sources */,
+				DCCC9D882967346300B79F5E /* ListView.swift in Sources */,
 				DC853DD1296552D000FB1F30 /* AddNoteView.swift in Sources */,
+				DCCC9D7C2967242200B79F5E /* TabBarCustomView.swift in Sources */,
 				DC853DD729658F3D00FB1F30 /* NoteModel.swift in Sources */,
 				DCF88BB42964A0010032292B /* DetailNote.swift in Sources */,
 				DC853DD92965C11200FB1F30 /* NotificationManager.swift in Sources */,
@@ -200,9 +237,12 @@
 				DC853DD42965535000FB1F30 /* NoteVM.swift in Sources */,
 				DCF88BAA29648F6C0032292B /* Persistence.swift in Sources */,
 				DC853DDB2965C14200FB1F30 /* NotificationHelper.swift in Sources */,
-				DCF88BA329648F6C0032292B /* ListView.swift in Sources */,
+				DCCC9D862967323000B79F5E /* CardsView.swift in Sources */,
+				DCF88BA329648F6C0032292B /* ListCardsView.swift in Sources */,
 				DCF88BA129648F6C0032292B /* ToDo_listApp.swift in Sources */,
+				DCCC9D7E296725A800B79F5E /* TabBarView.swift in Sources */,
 				DCF88BAD29648F6C0032292B /* ToDo_list.xcdatamodeld in Sources */,
+				DCCC9D8229672F9F00B79F5E /* ButtonAdd.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

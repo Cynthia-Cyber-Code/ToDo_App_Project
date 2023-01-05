@@ -7,64 +7,33 @@
 
 import SwiftUI
 import CoreData
-import MobileCoreServices
 
-struct Item: Identifiable {
-    let id = UUID()
-    let title: String
-}
-struct ListView: View {
-    @State var url_selection: Set<UUID> = []
-    @State private var items: [Item] = []
+
+struct ListCardsView: View {
     @Environment(\.managedObjectContext) var viewContext
        
     @FetchRequest(entity: Note.entity(), sortDescriptors: [ NSSortDescriptor(keyPath: \Note.order, ascending: true)], animation: .default)
     var notes: FetchedResults<Note>
-
-    @State var isAddPresented = false
-
     var body: some View {
         NavigationView {
             VStack {
                 List {
                     ForEach(notes, id: \.self) { note in
-                        NavigationLink {
-                            DetailNote(notificationManager: NotificationManager(), title: note.title!, date: note.date!, description: note.descriptif!, order: note.order, id: note.id ?? UUID())
-                        } label: {
-                            VStack(alignment: .leading){
-                                Text(note.title ?? "error")
-                                Text("\(note.date!.formatted(date: .abbreviated, time: .standard))")
-                            }
-                        }
+                        ListView(title: note.title!, date: note.date!, status: note.status!, description: note.description, id: note.id ?? UUID(), order: note.order)
                     }
-                    
                     .onMove(perform: moveNotes)
                     .onDelete(perform: deleteNotes)
                 }
+                .padding(.top, 150.0)
+                .listStyle(.sidebar)
                 .toolbar {
                     ToolbarItem(placement: .principal) {
-                        
-                        HStack {
-                            Button {
-                                isAddPresented.toggle()
-                            } label: {
-                                Image(systemName: "plus")
-                            }
-                            .sheet(isPresented: $isAddPresented) {
-                                AddNoteView( isAddPresented: $isAddPresented)
-                            }
-                            Spacer()
-                            VStack {
-                                Text("To-Do list").font(.title).fontWeight(.bold).foregroundColor(.black)
-                            }
-                            Spacer()
-                            
-                            EditButton().font(.title).fontWeight(.thin).foregroundColor(.black)
-                        }
-                        
+                           BarTitleView()
                     }
-                }.navigationBarTitle("Tasks")
-            }
+                }
+                ButtonAdd()
+                .navigationBarTitle("Tasks")
+            }.ignoresSafeArea()
         }
     }
     private func moveNotes(offsets: IndexSet, destination: Int) {
@@ -118,9 +87,9 @@ struct ListView: View {
     }
 }
 
-struct ListView_Previews: PreviewProvider {
+struct ListCardsView_Previews: PreviewProvider {
 
     static var previews: some View {
-        ListView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        ListCardsView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

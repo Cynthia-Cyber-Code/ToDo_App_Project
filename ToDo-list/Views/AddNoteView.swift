@@ -22,7 +22,7 @@ struct AddNoteView: View {
     @State var title: String = "Title"
     @State var description: String = "description"
     @State var date: Date = Date.now
-    @State var status: Status = .encours
+    @State var status: Status = .normal
     var body: some View {
         VStack {
             Form {
@@ -54,6 +54,20 @@ struct AddNoteView: View {
                     
                     Spacer()
                 }
+                VStack(alignment: .center) {
+                    Text("select order priority ").padding(.leading, 60)
+                    Spacer()
+                    Picker("Priority", selection: $status) {
+                        ForEach(Status.allCases, id: \.self) { status in
+                            Image(systemName: status.rawValue)
+                        }
+                    }
+                    .padding(.leading, 35)
+                    .frame(width: 200, height: 60)
+                    .pickerStyle(SegmentedPickerStyle())
+                    .scaledToFit()
+                    .scaleEffect(CGSize(width: 2, height: 2))
+                }.padding()
             }
             
             Button {

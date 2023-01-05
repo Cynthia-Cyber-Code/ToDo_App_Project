@@ -19,7 +19,7 @@ struct ToDo_listApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ListView()
+            ListCardsView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

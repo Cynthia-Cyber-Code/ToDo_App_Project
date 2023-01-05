@@ -22,7 +22,7 @@ struct ModifyView: View {
     @State var description: String
     @State var date: Date
     @State var order: Int64
-    @State var status: Status = .encours
+    @State var status: Status = .normal
     @State var id: UUID
     
     var body: some View {

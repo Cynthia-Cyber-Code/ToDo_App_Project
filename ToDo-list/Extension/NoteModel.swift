@@ -19,7 +19,7 @@ struct NoteModel: Identifiable {
         task.objectID
     }
     var status: Status {
-        Status(rawValue: task.status!) ?? .encours
+        Status(rawValue: task.status!) ?? .normal
     }
     var title: String {
         task.title!

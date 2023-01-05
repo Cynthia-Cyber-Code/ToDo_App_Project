@@ -9,9 +9,11 @@ import Foundation
 import SwiftUI
 import CoreData
 
-enum Status: String {
-    case encours = "en cours"
-    case finished = "terminé"
+let notificationManager: NotificationManager  = NotificationManager()
+
+enum Status: String, CaseIterable {
+    case priority = "clock.badge.exclamationmark.fill"
+    case normal = "clock.badge.checkmark.fill"
 }
 
 class NoteVM: ObservableObject {
@@ -56,4 +58,25 @@ class NoteVM: ObservableObject {
             }
         }
     }
+}
+
+
+func scheduleNotification(title: String, date: Date) {
+    let notificationId = UUID()
+    let content = UNMutableNotificationContent()
+    content.body = "\(title) at \(date.formatted(date: .abbreviated, time: .standard))"
+    content.sound = UNNotificationSound.default
+    content.userInfo = [
+        "notificationId": "\(notificationId)"
+    ]
+
+    let trigger = UNCalendarNotificationTrigger(
+        dateMatching: NotificationHelper.getTriggerDate(date: date)!,
+            repeats: false
+    )
+
+    notificationManager.scheduleNotification(
+            id: "\(notificationId)",
+            content: content,
+            trigger: trigger)
 }

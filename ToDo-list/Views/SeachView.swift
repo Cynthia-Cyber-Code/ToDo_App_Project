@@ -9,7 +9,27 @@ import SwiftUI
 
 struct SeachView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List {
+            ForEach(0...2, id: \.self) { index in
+                ZStack(alignment: .leading) {
+                    NavigationLink(
+                        destination: Text("Item #\(index)")) {
+                            EmptyView()
+                        }
+                        .opacity(0)
+                Text("Item #\(index)")
+                                }
+//            HStack(spacing: 0) {
+//              Text("Something")
+//
+//              NavigationLink(destination: ListView()) {
+//                EmptyView()
+//              }
+//              .frame(width: 0)
+//              .opacity(0)
+//            }
+          }
+        }
     }
 }
 

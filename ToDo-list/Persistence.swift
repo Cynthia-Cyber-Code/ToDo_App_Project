@@ -19,7 +19,7 @@ struct PersistenceController {
         newNote.timestamp = Date()
         newNote.title = "First task"
         newNote.order = 0
-        newNote.status = "en cours"
+        newNote.status = "normal"
         newNote.date = Date.now
         newNote.descriptif = "description"
         newNote.favoris = false
