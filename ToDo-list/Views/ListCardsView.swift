@@ -11,21 +11,54 @@ import CoreData
 
 struct ListCardsView: View {
     @Environment(\.managedObjectContext) var viewContext
-       
     @FetchRequest(entity: Note.entity(), sortDescriptors: [ NSSortDescriptor(keyPath: \Note.order, ascending: true)], animation: .default)
+    
     var notes: FetchedResults<Note>
+    @State var selectedTab: Tab = .all
+    @Namespace var namespace
     var body: some View {
         NavigationView {
             VStack {
                 List {
-                    ForEach(notes, id: \.self) { note in
-                        ListView(title: note.title!, date: note.date!, status: note.status!, description: note.description, id: note.id ?? UUID(), order: note.order)
+                    HStack {
+                        ForEach(Tab.allCases) { tab in
+                            SelectButton(tab: tab, selectedTab: $selectedTab, namespace: namespace)
+                        }
                     }
-                    .onMove(perform: moveNotes)
-                    .onDelete(perform: deleteNotes)
-                }
-                .padding(.top, 150.0)
-                .listStyle(.sidebar)
+                    .padding(.top, 150.0)
+                    
+                    if selectedTab == .all {
+                        ForEach(notes, id: \.self) { note in
+                            ListView(note: note)
+                        }
+                        .onMove(perform: moveNotes)
+                        .onDelete(perform: deleteNotes)
+                    } else if selectedTab == .end {
+                        ForEach(notes) { note in
+                            if note.favoris == true {
+                                ListView(note: note)
+                            }
+                        }.onMove(perform: moveNotes)
+                            .onDelete(perform: deleteNotes)
+                    } else if selectedTab == .wait {
+                        ForEach(notes) { note in
+                            if (note.date! <= Date.now && note.favoris == false) {
+                                ListView(note: note)
+                            }
+                        }.onMove(perform: moveNotes)
+                            .onDelete(perform: deleteNotes)
+                    } else if selectedTab == .late {
+                        ForEach(notes) { note in
+                            if note.date! > Date.now {
+                                ListView( note: note)
+                            }
+                        }.onMove(perform: moveNotes)
+                        .onDelete(perform: deleteNotes)
+                    } else {
+                        EmptyView()
+                    }
+                }.id(UUID()).padding()
+                .listStyle(.plain)
                 .toolbar {
                     ToolbarItem(placement: .principal) {
                            BarTitleView()
@@ -81,7 +114,8 @@ struct ListCardsView: View {
                 try viewContext.save()
             } catch {
                 let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                print("Unresolved error \(nsError.localizedDescription), \(nsError.userInfo)")
+//                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
         }
     }
@@ -91,5 +125,6 @@ struct ListCardsView_Previews: PreviewProvider {
 
     static var previews: some View {
         ListCardsView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        ListCardsView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).preferredColorScheme(.dark)
     }
 }

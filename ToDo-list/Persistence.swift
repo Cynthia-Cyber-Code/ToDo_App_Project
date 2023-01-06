@@ -15,7 +15,7 @@ struct PersistenceController {
         let viewContext = result.container.viewContext
 //        for _ in 0..<10 {
         let newNote = Note(context: viewContext)
-        newNote.id = UUID()
+        newNote.idNote = UUID().uuidString
         newNote.timestamp = Date()
         newNote.title = "First task"
         newNote.order = 0
@@ -23,9 +23,15 @@ struct PersistenceController {
         newNote.date = Date.now
         newNote.descriptif = "description"
         newNote.favoris = false
-        newNote.noteUser = ""
-        newNote.updateName = ""
-        newNote.updateTime = Date.now
+        newNote.notif = false
+        
+        let newList = ListCheckMark(context: viewContext)
+        newList.id_message = UUID()
+        newList.idTask = UUID().uuidString
+        newList.activeCheckMark = false
+        newList.message = ""
+        
+        
 //        }
         do {
             try viewContext.save()
@@ -45,7 +51,8 @@ struct PersistenceController {
         }
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
+                print(error.localizedDescription)
+//                fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true

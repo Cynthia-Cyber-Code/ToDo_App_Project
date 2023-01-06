@@ -10,10 +10,8 @@ import SwiftUI
 struct BarTitleView: View {
     var body: some View {
         HStack {
-            Text("settings")
-                .fontWeight(.thin).foregroundColor(.black)
             Spacer()
-            Text("To-Do list     ").font(.title).fontWeight(.bold)
+            Text("To-Do list").font(.title).fontWeight(.bold)
             Spacer()
             EditButton().fontWeight(.thin).foregroundColor(.black)
         }.padding()

@@ -9,8 +9,6 @@ import Foundation
 import SwiftUI
 import CoreData
 
-let notificationManager: NotificationManager  = NotificationManager()
-
 enum Status: String, CaseIterable {
     case priority = "clock.badge.exclamationmark.fill"
     case normal = "clock.badge.checkmark.fill"
@@ -20,7 +18,7 @@ class NoteVM: ObservableObject {
     @Environment(\.managedObjectContext) var  viewContext
     
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Note.timestamp, ascending: true), NSSortDescriptor(keyPath: \Note.title, ascending: true), NSSortDescriptor(keyPath: \Note.descriptif, ascending: true), NSSortDescriptor(keyPath: \Note.status, ascending: true), NSSortDescriptor(keyPath: \Note.favoris, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Note.id, ascending: true)],
         animation: .default)
     
     var notes: FetchedResults<Note>
@@ -33,15 +31,13 @@ class NoteVM: ObservableObject {
             newNote.date = date
             newNote.descriptif = description
             newNote.favoris = false
-            newNote.noteUser = String()
-            newNote.updateName = String()
-            newNote.updateTime = Date.now
             
             do {
                 try viewContext.save()
             } catch {
                 let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                print("Unresolved error \(nsError.localizedDescription), \(nsError.userInfo)")
+//                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
         }
     }
@@ -54,29 +50,32 @@ class NoteVM: ObservableObject {
                 try viewContext.save()
             } catch {
                 let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                print(nsError.localizedDescription)
+//                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
         }
     }
 }
 
-
-func scheduleNotification(title: String, date: Date) {
-    let notificationId = UUID()
-    let content = UNMutableNotificationContent()
-    content.body = "\(title) at \(date.formatted(date: .abbreviated, time: .standard))"
-    content.sound = UNNotificationSound.default
-    content.userInfo = [
-        "notificationId": "\(notificationId)"
-    ]
-
-    let trigger = UNCalendarNotificationTrigger(
-        dateMatching: NotificationHelper.getTriggerDate(date: date)!,
-            repeats: false
-    )
-
-    notificationManager.scheduleNotification(
-            id: "\(notificationId)",
-            content: content,
-            trigger: trigger)
+struct CheckboxStyle: ToggleStyle {
+ 
+    func makeBody(configuration: Self.Configuration) -> some View {
+ 
+        return HStack {
+ 
+            configuration.label
+ 
+            Spacer()
+ 
+            Image(systemName: configuration.isOn ? "checkmark.square" : "circle")
+                .resizable()
+                .frame(width: 50, height: 50)
+                .foregroundColor(configuration.isOn ? .orange : .gray)
+                .font(.system(size: 20, weight: .bold, design: .default))
+                .onTapGesture {
+                    configuration.isOn.toggle()
+                }
+        }
+ 
+    }
 }

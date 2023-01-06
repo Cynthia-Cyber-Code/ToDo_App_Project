@@ -45,7 +45,7 @@ struct AddNoteView: View {
                 }
                 
                 VStack {
-                    DatePicker(selection: $date, displayedComponents: [.date, .hourAndMinute]) {
+                    DatePicker(selection: $date, in: Date.now..., displayedComponents: [.date, .hourAndMinute]) {
                         Text("Select a date")
                     }
                     Spacer()
@@ -72,7 +72,6 @@ struct AddNoteView: View {
             
             Button {
                 addNote()
-//                noteVm.addItem(title: title, status: status.rawValue, date: date, description: description)
                 isAddPresented.toggle()
             } label: {
                 HStack{
@@ -103,15 +102,15 @@ struct AddNoteView: View {
             newNote.date = date
             newNote.descriptif = description
             newNote.favoris = false
-            newNote.noteUser = String()
-            newNote.updateName = String()
-            newNote.updateTime = Date.now
+            newNote.notif = false
+            newNote.idNote = UUID().uuidString
             
             do {
                 try viewContext.save()
             } catch {
                 let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                print("Unresolved error \(nsError.localizedDescription), \(nsError.userInfo)")
+//                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
         }
     }

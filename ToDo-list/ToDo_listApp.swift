@@ -38,10 +38,12 @@ struct ToDo_listApp: App {
         notificationManager.requestPermission(completionHandler: { isGranted, error in
             if isGranted {
                 // handle granted success
+                print("success")
             }
 
             if let _ = error {
                 // handle error
+                print("error")
 
                 return
             }

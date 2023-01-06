@@ -11,7 +11,7 @@ struct ModifyView: View {
     @Environment(\.managedObjectContext) var viewContext
     
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Note.id, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Note.timestamp, ascending: true), NSSortDescriptor(keyPath: \Note.order, ascending: true), NSSortDescriptor(keyPath: \Note.title, ascending: true), NSSortDescriptor(keyPath: \Note.descriptif, ascending: true), NSSortDescriptor(keyPath: \Note.status, ascending: true), NSSortDescriptor(keyPath: \Note.favoris, ascending: true)],
         animation: .default)
     
     var notes: FetchedResults<Note>
@@ -22,8 +22,9 @@ struct ModifyView: View {
     @State var description: String
     @State var date: Date
     @State var order: Int64
-    @State var status: Status = .normal
-    @State var id: UUID
+    @State var status: Status
+//    @State var id: UUID
+    @State var note: Note
     
     var body: some View {
         VStack {
@@ -47,7 +48,7 @@ struct ModifyView: View {
                 }
                 
                 VStack {
-                    DatePicker(selection: $date, displayedComponents: [.date, .hourAndMinute]) {
+                    DatePicker(selection: $date, in: Date.now..., displayedComponents: [.date, .hourAndMinute]) {
                         Text("Select a date")
                     }
                     Spacer()
@@ -56,10 +57,24 @@ struct ModifyView: View {
                     
                     Spacer()
                 }
+                VStack(alignment: .center) {
+                    Text("select order priority ").padding(.leading, 60)
+                    Spacer()
+                    Picker("Priority", selection: $status) {
+                        ForEach(Status.allCases, id: \.self) { status in
+                            Image(systemName: status.rawValue)
+                        }
+                    }
+                    .padding(.leading, 35)
+                    .frame(width: 200, height: 60)
+                    .pickerStyle(SegmentedPickerStyle())
+                    .scaledToFit()
+                    .scaleEffect(CGSize(width: 2, height: 2))
+                }.padding()
             }
             
             Button {
-                addNote()
+                autosave(note: note)
                 isAddPresented.toggle()
             } label: {
                 HStack{
@@ -75,26 +90,23 @@ struct ModifyView: View {
             .listStyle(.plain)
         }
     }
-    private func addNote() {
+    func autosave(note: Note) {
         withAnimation {
-            let note = Note(context: viewContext)
-            note.id = id
-            note.timestamp = Date.now
-            note.title = title
-            note.order = order
-            note.status = status.rawValue
-            note.date = date
-            note.descriptif = description
-            note.favoris = false
-            note.noteUser = String()
-            note.updateName = String()
-            note.updateTime = Date.now
-            
-            do {
-                try viewContext.save()
-            } catch {
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            let updateTitle = self.title
+            let updateDesciption = self.description
+            let updateStatus = self.status.rawValue
+            let updateDateModified = self.date
+            viewContext.performAndWait {
+                note.title = updateTitle
+                note.descriptif = updateDesciption
+                note.status = updateStatus
+                note.date = updateDateModified
+                do {
+                    try viewContext.save()
+                    print("Note saved!")
+                } catch {
+                    print(error.localizedDescription)
+                }
             }
         }
     }
@@ -102,6 +114,6 @@ struct ModifyView: View {
 
 struct ModifyView_Previews: PreviewProvider {
     static var previews: some View {
-        ModifyView(isAddPresented: .constant(true), title: "", description: "", date: Date.now, order: 0, id: UUID())
+        ModifyView(isAddPresented: .constant(true), title: "", description: "", date: Date.now, order: 0, status: Status.normal, note: Note())
     }
 }

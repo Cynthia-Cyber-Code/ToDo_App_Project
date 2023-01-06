@@ -8,17 +8,14 @@
 import SwiftUI
 
 struct ListView: View {
-    @State var title: String
-    @State var date: Date
-    @State var status: String
-    @State var description: String
-    @State var id: UUID
-    @State var order: Int64
+    @State var note: Note
+    
+    @State var isAddPresented = false
     var body: some View {
         ZStack {
-            CardsView(title: title, date: date, status: status)
+            CardsView(title: note.title!, date: note.date!, status: note.status!)
             NavigationLink {
-                DetailNote(title: title, date: date, description: description, order: order, id: id)
+                DetailNote(note: note, showGreeting: note.notif, showFinish: note.favoris)
         } label: {
             EmptyView()
         }.frame(width: 0, height: 0)
@@ -36,6 +33,6 @@ struct ListView: View {
 
 struct ListView_Previews: PreviewProvider {
     static var previews: some View {
-        ListView(title: "", date: Date(), status: "", description: "", id: UUID(), order: Int64())
+        ListView(note: Note())
     }
 }
