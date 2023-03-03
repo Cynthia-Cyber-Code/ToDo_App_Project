@@ -27,7 +27,6 @@ final class ToDo_listUITests: XCTestCase {
         let allButton = app.buttons["ALL"]
         let backButton = app.buttons["Revenir En Arrière"]
         let selectButtons = app.buttons["Supprimer Du Calendrier"]
-//        app.windows.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element
         
         let list = app.collectionViews.element
         app.launch()
@@ -73,9 +72,8 @@ final class ToDo_listUITests: XCTestCase {
         let description = formAddNote/*@START_MENU_TOKEN@*/.staticTexts["Description"]/*[[".cells.staticTexts[\"Description\"]",".staticTexts[\"Description\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
         let placeholderDescription = formAddNote.children(matching: .cell).element(boundBy: 1).children(matching: .other).element(boundBy: 1).children(matching: .other).element.children(matching: .other).element.children(matching: .textView).element
         
-        let date = app.collectionViews/*@START_MENU_TOKEN@*/.staticTexts["Select a date"]/*[[".cells.staticTexts[\"Select a date\"]",".staticTexts[\"Select a date\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+        let date = app.collectionViews/*@START_MENU_TOKEN@*/.cells.staticTexts["Select a date"]/*[[".cells.staticTexts[\"Select a date\"]",".staticTexts[\"Select a date\"]"],[[[-1,1],[-1,0]]],[1]]@END_MENU_TOKEN@*/
         
-//        let dismiss = app/*@START_MENU_TOKEN@*/.buttons["PopoverDismissRegion"]/*[[".buttons[\"dismiss popup\"]",".buttons[\"PopoverDismissRegion\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
         let changeDate = app.datePickers["DatePicker"]
          
         XCTAssert(toDo.exists)
@@ -107,7 +105,7 @@ final class ToDo_listUITests: XCTestCase {
         let exitDate = formAddNote.children(matching: .cell).element(boundBy: 2).children(matching: .other).element(boundBy: 1).children(matching: .other).element
         exitDate.tap()
                 
-        let AddButton = app.buttons["Ajouter"]
+        let AddButton = app.buttons["Ajout"]
         XCTAssert(AddButton.exists)
         
         AddButton.tap()
@@ -192,28 +190,3 @@ extension XCUIElement {
         }
     }
 }
-
-
-//        changeDate.tap()
-//        app.datePickers.collectionViews.buttons["mercredi 28 juin"].children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.tap()
-//        dismiss.tap()
-//        formAddNote.datePickers.buttons["Date and Time Picker"].buttons["8:19 PM"].tap()
-//        dismiss.tap()
-//        let readDate = formAddNote.staticTexts["finish the 20 mars 2023 à 8:05:00 PM"]
-//        XCTAssert(readDate.exists)
-        
-//        let selectPriority = app.collectionViews/*@START_MENU_TOKEN@*/.staticTexts["select order priority "]/*[[".cells.staticTexts[\"select order priority \"]",".staticTexts[\"select order priority \"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
-//        let iconPriority = formAddNote/*@START_MENU_TOKEN@*/.segmentedControls.buttons["clock.badge.exclamationmark.fill"]/*[[".cells",".segmentedControls.buttons[\"clock.badge.exclamationmark.fill\"]",".buttons[\"clock.badge.exclamationmark.fill\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[1]]@END_MENU_TOKEN@*/
-//        let iconDescriptionPriority = formAddNote/*@START_MENU_TOKEN@*/.staticTexts["Priority"]/*[[".cells.staticTexts[\"Priority\"]",".staticTexts[\"Priority\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
-//        let iconNormal = formAddNote/*@START_MENU_TOKEN@*/.buttons["clock.badge.checkmark.fill"]/*[[".cells",".segmentedControls.buttons[\"clock.badge.checkmark.fill\"]",".buttons[\"clock.badge.checkmark.fill\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/
-//        let iconDescriptionNormal = formAddNote.staticTexts["Normal"]
-        
-//        XCTAssert(selectPriority.exists)
-//        XCTAssert(iconPriority.exists)
-//        XCTAssert(iconNormal.exists)
-        
-//        iconPriority.tap()
-//        XCTAssert(iconDescriptionPriority.exists)
-//
-//        iconNormal.tap()
-//        XCTAssert(iconDescriptionNormal.exists)

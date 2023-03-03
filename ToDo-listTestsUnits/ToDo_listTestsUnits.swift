@@ -101,13 +101,13 @@ final class ToDo_listTestsUnits: XCTestCase {
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         measure {
-//            let task = viewModel.addTask(title: "Title", notes: notes, status: Status.priority, date: Date.now, description: "Content", vc: viewContext)
-//            
-//            let newTitle = "Title 2"
-//            let newDate = Date.now
-//            let newContent = "Test description 2"
-//
-//            viewModel.autosave(note: task, title: newTitle, status: Status.priority, date: newDate, description: newContent, viewContext: viewContext)
+            let task = viewModel.addTask(title: "Title", notes: notes, status: Status.priority, date: Date.now, description: "Content", vc: viewContext)
+            
+            let newTitle = "Title 2"
+            let newDate = Date.now
+            let newContent = "Test description 2"
+
+            viewModel.autosave(note: task, title: newTitle, status: Status.priority, date: newDate, description: newContent, viewContext: viewContext)
         }
     }
 
