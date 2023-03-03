@@ -20,6 +20,7 @@
 		DC853DDD2965CE7300FB1F30 /* ModifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC853DDC2965CE7300FB1F30 /* ModifyView.swift */; };
 		DC8A242229B21D4300F5DF52 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF88BA929648F6C0032292B /* Persistence.swift */; };
 		DC8A242329B21D4400F5DF52 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF88BA929648F6C0032292B /* Persistence.swift */; };
+		DC8A242529B2399600F5DF52 /* ButtonAjout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8A242429B2399600F5DF52 /* ButtonAjout.swift */; };
 		DCCC9D7E296725A800B79F5E /* SelectBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC9D7D296725A800B79F5E /* SelectBarView.swift */; };
 		DCCC9D8229672F9F00B79F5E /* ButtonAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC9D8129672F9F00B79F5E /* ButtonAdd.swift */; };
 		DCCC9D842967304700B79F5E /* BarTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC9D832967304700B79F5E /* BarTitleView.swift */; };
@@ -91,6 +92,7 @@
 		DC853DD82965C11200FB1F30 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		DC853DDA2965C14200FB1F30 /* NotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
 		DC853DDC2965CE7300FB1F30 /* ModifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyView.swift; sourceTree = "<group>"; };
+		DC8A242429B2399600F5DF52 /* ButtonAjout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonAjout.swift; sourceTree = "<group>"; };
 		DCCC9D7D296725A800B79F5E /* SelectBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectBarView.swift; sourceTree = "<group>"; };
 		DCCC9D8129672F9F00B79F5E /* ButtonAdd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonAdd.swift; sourceTree = "<group>"; };
 		DCCC9D832967304700B79F5E /* BarTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarTitleView.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				DCCC9D832967304700B79F5E /* BarTitleView.swift */,
 				DCCC9D852967323000B79F5E /* CardsView.swift */,
 				DCCC9D872967346300B79F5E /* ListView.swift */,
+				DC8A242429B2399600F5DF52 /* ButtonAjout.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -419,6 +422,7 @@
 				DC853DD1296552D000FB1F30 /* AddNoteView.swift in Sources */,
 				DCF88BB42964A0010032292B /* DetailNote.swift in Sources */,
 				DC853DD92965C11200FB1F30 /* NotificationManager.swift in Sources */,
+				DC8A242529B2399600F5DF52 /* ButtonAjout.swift in Sources */,
 				DC853DDD2965CE7300FB1F30 /* ModifyView.swift in Sources */,
 				DC853DD42965535000FB1F30 /* NoteVM.swift in Sources */,
 				DC0B947129B0F8D300D3FB2B /* ListStepsCheckMark.swift in Sources */,

@@ -27,6 +27,7 @@ struct AddNoteView: View {
     @State var date: Date = Date.now
     @State var color: Color = .gray
     @State var status: Status = .normal
+    @State var agreedToTerms = false
     var body: some View {
         VStack {
             Form {
@@ -34,8 +35,7 @@ struct AddNoteView: View {
                     Text("To-Do")
                     TextField(text: $title) {
                         Text("Titre")
-                    }
-                    .padding()
+                    }.padding()
                     .textFieldStyle(.roundedBorder)
                     .keyboardType(.default)
                 }
@@ -125,29 +125,39 @@ struct AddNoteView: View {
 //                    Text("No Step Add").font(.title).foregroundColor(.gray)
 //                }
             }
-            
             Button {
                 if (title == "" || description == "" || date == Date() || status.rawValue == ""){
-                        color = .gray
+//                    color = .gray
                 } else {
-                    color = .orange
+//                    color = .orange
                     noteVM.note = noteVM.addTask(title: title, notes: notes, status: status, date: date, description: description, vc: viewContext)
                     isAddPresented.toggle()
                 }
             } label: {
                 HStack{
                     Spacer()
-                    Text("Ajouter")
+                    Text("Ajout")
                         .bold()
                         .padding()
                         .frame(width: 300)
                         .foregroundColor(.white)
-                        .background(RoundedRectangle(cornerRadius: 20).foregroundColor(color))
+                        .background(RoundedRectangle(cornerRadius: 20).foregroundColor(titleIsValid ? Color.orange : Color.gray))
                     Spacer()
-                }.padding()
+                }.disabled(!titleIsValid).padding()
             }
             .listStyle(.plain)
         }
+    }
+    var titleIsValid: Bool {
+            return !title.isEmpty
+    }
+
+    var buttonColor: Color {
+        return titleIsValid ? .accentColor : .gray
+    }
+
+    func sendMessage() {
+        title = ""
     }
 }
 

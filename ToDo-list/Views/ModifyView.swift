@@ -84,12 +84,23 @@ struct ModifyView: View {
                         .padding()
                         .frame(width: 300)
                         .foregroundColor(.white)
-                        .background(RoundedRectangle(cornerRadius: 20))
+                        .background(RoundedRectangle(cornerRadius: 20).foregroundColor(titleIsValid ? Color.orange : Color.gray))
                     Spacer()
                 }
-            }
+            }.disabled(!titleIsValid).padding()
             .listStyle(.plain)
         }
+    }
+    var titleIsValid: Bool {
+            return !title.isEmpty
+    }
+
+    var buttonColor: Color {
+        return titleIsValid ? .accentColor : .gray
+    }
+
+    func sendMessage() {
+        title = ""
     }
 }
 
