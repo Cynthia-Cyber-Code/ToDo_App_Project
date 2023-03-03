@@ -18,11 +18,41 @@
 		DC853DD92965C11200FB1F30 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC853DD82965C11200FB1F30 /* NotificationManager.swift */; };
 		DC853DDB2965C14200FB1F30 /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC853DDA2965C14200FB1F30 /* NotificationHelper.swift */; };
 		DC853DDD2965CE7300FB1F30 /* ModifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC853DDC2965CE7300FB1F30 /* ModifyView.swift */; };
+		DC8A242229B21D4300F5DF52 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF88BA929648F6C0032292B /* Persistence.swift */; };
+		DC8A242329B21D4400F5DF52 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF88BA929648F6C0032292B /* Persistence.swift */; };
 		DCCC9D7E296725A800B79F5E /* SelectBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC9D7D296725A800B79F5E /* SelectBarView.swift */; };
 		DCCC9D8229672F9F00B79F5E /* ButtonAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC9D8129672F9F00B79F5E /* ButtonAdd.swift */; };
 		DCCC9D842967304700B79F5E /* BarTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC9D832967304700B79F5E /* BarTitleView.swift */; };
 		DCCC9D862967323000B79F5E /* CardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC9D852967323000B79F5E /* CardsView.swift */; };
 		DCCC9D882967346300B79F5E /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC9D872967346300B79F5E /* ListView.swift */; };
+		DCF3305E29B2081E008E6019 /* ListCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF88BA229648F6C0032292B /* ListCardsView.swift */; };
+		DCF3305F29B2081F008E6019 /* ListCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF88BA229648F6C0032292B /* ListCardsView.swift */; };
+		DCF3306229B20839008E6019 /* ButtonAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC9D8129672F9F00B79F5E /* ButtonAdd.swift */; };
+		DCF3306329B2083A008E6019 /* ButtonAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC9D8129672F9F00B79F5E /* ButtonAdd.swift */; };
+		DCF3306429B20840008E6019 /* CardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC9D852967323000B79F5E /* CardsView.swift */; };
+		DCF3306529B20840008E6019 /* CardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC9D852967323000B79F5E /* CardsView.swift */; };
+		DCF3306629B20844008E6019 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC9D872967346300B79F5E /* ListView.swift */; };
+		DCF3306729B20845008E6019 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC9D872967346300B79F5E /* ListView.swift */; };
+		DCF3306829B20849008E6019 /* DetailNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF88BB32964A0010032292B /* DetailNote.swift */; };
+		DCF3306929B20849008E6019 /* DetailNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF88BB32964A0010032292B /* DetailNote.swift */; };
+		DCF3306A29B20853008E6019 /* AddNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC853DD0296552D000FB1F30 /* AddNoteView.swift */; };
+		DCF3306B29B20854008E6019 /* AddNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC853DD0296552D000FB1F30 /* AddNoteView.swift */; };
+		DCF3306C29B20891008E6019 /* ModifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC853DDC2965CE7300FB1F30 /* ModifyView.swift */; };
+		DCF3306D29B20892008E6019 /* ModifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC853DDC2965CE7300FB1F30 /* ModifyView.swift */; };
+		DCF330AB29B20EEE008E6019 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC853DD82965C11200FB1F30 /* NotificationManager.swift */; };
+		DCF330AC29B20EEF008E6019 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC853DD82965C11200FB1F30 /* NotificationManager.swift */; };
+		DCF330AD29B20EF1008E6019 /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC853DDA2965C14200FB1F30 /* NotificationHelper.swift */; };
+		DCF330AE29B20EF2008E6019 /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC853DDA2965C14200FB1F30 /* NotificationHelper.swift */; };
+		DCF330AF29B20EF5008E6019 /* ListStepsCheckMark.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0B947029B0F8D300D3FB2B /* ListStepsCheckMark.swift */; };
+		DCF330B029B20EF5008E6019 /* ListStepsCheckMark.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0B947029B0F8D300D3FB2B /* ListStepsCheckMark.swift */; };
+		DCF330B129B20EF8008E6019 /* NoteVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC853DD32965535000FB1F30 /* NoteVM.swift */; };
+		DCF330B229B20EF8008E6019 /* NoteVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC853DD32965535000FB1F30 /* NoteVM.swift */; };
+		DCF330B329B20F00008E6019 /* SelectBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC9D7D296725A800B79F5E /* SelectBarView.swift */; };
+		DCF330B429B20F01008E6019 /* SelectBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC9D7D296725A800B79F5E /* SelectBarView.swift */; };
+		DCF330B529B21145008E6019 /* ToDo_list.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DCF88BAB29648F6C0032292B /* ToDo_list.xcdatamodeld */; };
+		DCF330B629B21145008E6019 /* ToDo_list.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DCF88BAB29648F6C0032292B /* ToDo_list.xcdatamodeld */; };
+		DCF330B729B21164008E6019 /* ToDo_listApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF88BA029648F6C0032292B /* ToDo_listApp.swift */; };
+		DCF330B829B21164008E6019 /* ToDo_listApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF88BA029648F6C0032292B /* ToDo_listApp.swift */; };
 		DCF88BA129648F6C0032292B /* ToDo_listApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF88BA029648F6C0032292B /* ToDo_listApp.swift */; };
 		DCF88BA329648F6C0032292B /* ListCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF88BA229648F6C0032292B /* ListCardsView.swift */; };
 		DCF88BA529648F6C0032292B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCF88BA429648F6C0032292B /* Assets.xcassets */; };
@@ -66,6 +96,7 @@
 		DCCC9D832967304700B79F5E /* BarTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarTitleView.swift; sourceTree = "<group>"; };
 		DCCC9D852967323000B79F5E /* CardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsView.swift; sourceTree = "<group>"; };
 		DCCC9D872967346300B79F5E /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
+		DCF3306E29B20B5D008E6019 /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
 		DCF88B9D29648F6C0032292B /* ToDo-list.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ToDo-list.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCF88BA029648F6C0032292B /* ToDo_listApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo_listApp.swift; sourceTree = "<group>"; };
 		DCF88BA229648F6C0032292B /* ListCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCardsView.swift; sourceTree = "<group>"; };
@@ -164,6 +195,7 @@
 		DCF88B9429648F6C0032292B = {
 			isa = PBXGroup;
 			children = (
+				DCF3306E29B20B5D008E6019 /* TestPlan.xctestplan */,
 				DCF88B9F29648F6C0032292B /* ToDo-list */,
 				DC112A6B29AFAEF1004FD498 /* ToDo-listTestsUnits */,
 				DC112A7829AFAF05004FD498 /* ToDo-listUITests */,
@@ -333,8 +365,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCF3306C29B20891008E6019 /* ModifyView.swift in Sources */,
+				DCF3306429B20840008E6019 /* CardsView.swift in Sources */,
+				DC8A242229B21D4300F5DF52 /* Persistence.swift in Sources */,
+				DCF330B129B20EF8008E6019 /* NoteVM.swift in Sources */,
+				DCF330B329B20F00008E6019 /* SelectBarView.swift in Sources */,
+				DCF3306229B20839008E6019 /* ButtonAdd.swift in Sources */,
 				DC112A6D29AFAEF1004FD498 /* ToDo_listTestsUnits.swift in Sources */,
+				DCF330AB29B20EEE008E6019 /* NotificationManager.swift in Sources */,
+				DCF3306629B20844008E6019 /* ListView.swift in Sources */,
+				DCF330AD29B20EF1008E6019 /* NotificationHelper.swift in Sources */,
+				DCF3306829B20849008E6019 /* DetailNote.swift in Sources */,
 				DC0B947229B119F000D3FB2B /* BarTitleView.swift in Sources */,
+				DCF3306A29B20853008E6019 /* AddNoteView.swift in Sources */,
+				DCF3305E29B2081E008E6019 /* ListCardsView.swift in Sources */,
+				DCF330AF29B20EF5008E6019 /* ListStepsCheckMark.swift in Sources */,
+				DCF330B529B21145008E6019 /* ToDo_list.xcdatamodeld in Sources */,
+				DCF330B829B21164008E6019 /* ToDo_listApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,8 +389,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCF3306729B20845008E6019 /* ListView.swift in Sources */,
+				DCF3306529B20840008E6019 /* CardsView.swift in Sources */,
 				DC112A7C29AFAF05004FD498 /* ToDo_listUITestsLaunchTests.swift in Sources */,
+				DCF3306329B2083A008E6019 /* ButtonAdd.swift in Sources */,
+				DCF330B729B21164008E6019 /* ToDo_listApp.swift in Sources */,
+				DCF3306D29B20892008E6019 /* ModifyView.swift in Sources */,
+				DCF330B029B20EF5008E6019 /* ListStepsCheckMark.swift in Sources */,
+				DCF3306B29B20854008E6019 /* AddNoteView.swift in Sources */,
+				DCF330B229B20EF8008E6019 /* NoteVM.swift in Sources */,
+				DC8A242329B21D4400F5DF52 /* Persistence.swift in Sources */,
+				DCF330AE29B20EF2008E6019 /* NotificationHelper.swift in Sources */,
+				DCF330AC29B20EEF008E6019 /* NotificationManager.swift in Sources */,
 				DC112A7A29AFAF05004FD498 /* ToDo_listUITests.swift in Sources */,
+				DCF330B629B21145008E6019 /* ToDo_list.xcdatamodeld in Sources */,
+				DCF3306929B20849008E6019 /* DetailNote.swift in Sources */,
+				DCF3305F29B2081F008E6019 /* ListCardsView.swift in Sources */,
+				DCF330B429B20F01008E6019 /* SelectBarView.swift in Sources */,
 				DC0B947329B119F100D3FB2B /* BarTitleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

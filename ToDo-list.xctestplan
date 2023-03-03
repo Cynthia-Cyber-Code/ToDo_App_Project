@@ -1,0 +1,23 @@
+{
+  "configurations" : [
+    {
+      "id" : "38E9546D-297A-4F42-8DDE-3ACB955BAED9",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:ToDo-list.xcodeproj",
+      "identifier" : "DCF88B9C29648F6C0032292B",
+      "name" : "ToDo-list"
+    }
+  },
+  "testTargets" : [
+
+  ],
+  "version" : 1
+}
