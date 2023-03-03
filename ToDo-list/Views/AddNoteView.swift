@@ -11,6 +11,8 @@ import CoreData
 struct AddNoteView: View {
     @Environment(\.managedObjectContext) var viewContext
     
+    @ObservedObject var noteVM = TaskViewModel()
+    
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Note.timestamp, ascending: true), NSSortDescriptor(keyPath: \Note.order, ascending: true), NSSortDescriptor(keyPath: \Note.title, ascending: true), NSSortDescriptor(keyPath: \Note.descriptif, ascending: true), NSSortDescriptor(keyPath: \Note.status, ascending: true), NSSortDescriptor(keyPath: \Note.favoris, ascending: true)],
         animation: .default)
@@ -19,9 +21,11 @@ struct AddNoteView: View {
 
     @Binding var isAddPresented: Bool
     
-    @State var title: String = "Title"
-    @State var description: String = "description"
+    @State var title: String = ""
+    @State var description: String = ""
+    @State private var content: String = ""
     @State var date: Date = Date.now
+    @State var color: Color = .gray
     @State var status: Status = .normal
     var body: some View {
         VStack {
@@ -47,7 +51,7 @@ struct AddNoteView: View {
                 VStack {
                     DatePicker(selection: $date, in: Date.now..., displayedComponents: [.date, .hourAndMinute]) {
                         Text("Select a date")
-                    }
+                    }.accessibilityIdentifier("DatePicker")
                     Spacer()
                     
                     Text("finish the \(date.formatted(date: .abbreviated, time: .standard))")
@@ -55,63 +59,94 @@ struct AddNoteView: View {
                     Spacer()
                 }
                 VStack(alignment: .center) {
-                    Text("select order priority ").padding(.leading, 60)
+                    Text("select order priority ").padding()
                     Spacer()
                     Picker("Priority", selection: $status) {
                         ForEach(Status.allCases, id: \.self) { status in
                             Image(systemName: status.rawValue)
                         }
                     }
-                    .padding(.leading, 35)
+                    .padding()
                     .frame(width: 200, height: 60)
                     .pickerStyle(SegmentedPickerStyle())
                     .scaledToFit()
                     .scaleEffect(CGSize(width: 2, height: 2))
+                    if (status.rawValue == "clock.badge.exclamationmark.fill") {
+                        HStack(alignment: .center) {
+                            Spacer()
+                            Text("Priority").fontWeight(.semibold)
+                            Spacer()
+                        }.padding()
+                    } else {
+                        HStack(alignment: .center) {
+                            Spacer()
+                            Text("Normal").fontWeight(.semibold)
+                            Spacer()
+                        }.padding()
+                    }
                 }.padding()
+                
+//                HStack {
+//                    TextField("Add a step", text: $content)
+//                        .padding()
+//                        .frame(width: 270, height: 50)
+//                        .background(Color(.black).opacity(0.05))
+//                        .cornerRadius(15)
+//                        .overlay(RoundedRectangle(cornerRadius: 15).stroke(lineWidth: 1).foregroundColor(Color.black.opacity(0.3)))
+//                        .textInputAutocapitalization(.never)
+//                        .disableAutocorrection(true)
+//                    Button {
+//                        addList()
+//                    } label: {
+//                        Image(systemName: "square.and.arrow.down.fill")
+//                            .padding()
+//                            .background(Color(.orange).opacity(0.9).cornerRadius(15))
+//                            .foregroundColor(Color.white)
+//                    }
+//                }
+//                if (lists.last != nil) {
+//                    List {
+//                        ForEach(lists, id: \.self) {
+//                            checkMark in
+//                            if Note(context: viewContext).idNote == checkMark.idTask {
+//                                HStack {
+//                                    Image(systemName: checkMark.activeCheckMark ? "checkmark.square.fill" : "square").font(.title)
+//                                        .foregroundColor(checkMark.activeCheckMark ? Color(.orange) : Color.secondary)
+//                                        .onTapGesture {
+//                                            checkMark.activeCheckMark.toggle()
+//                                        }
+//                                    Text(checkMark.message!)
+//                                }
+//                            }
+//                        }.onMove(perform: moveNotes)
+//                        .onDelete(perform: deleteNotes)
+//                    }
+//                } else {
+//                    Text("No Step Add").font(.title).foregroundColor(.gray)
+//                }
             }
             
             Button {
-                addNote()
-                isAddPresented.toggle()
+                if (title == "" || description == "" || date == Date() || status.rawValue == ""){
+                        color = .gray
+                } else {
+                    color = .orange
+                    noteVM.note = noteVM.addTask(title: title, notes: notes, status: status, date: date, description: description, vc: viewContext)
+                    isAddPresented.toggle()
+                }
             } label: {
                 HStack{
                     Spacer()
                     Text("Ajouter")
+                        .bold()
                         .padding()
                         .frame(width: 300)
                         .foregroundColor(.white)
-                        .background(RoundedRectangle(cornerRadius: 20))
+                        .background(RoundedRectangle(cornerRadius: 20).foregroundColor(color))
                     Spacer()
-                }
+                }.padding()
             }
             .listStyle(.plain)
-        }
-    }
-  private func addNote() {
-        withAnimation {
-            let newNote = Note(context: viewContext)
-            newNote.timestamp = Date.now
-            newNote.title = title
-            if (notes.last == nil)
-            {
-                newNote.order = 0
-            } else {
-                newNote.order = notes.last!.order + 1
-            }
-            newNote.status = status.rawValue
-            newNote.date = date
-            newNote.descriptif = description
-            newNote.favoris = false
-            newNote.notif = false
-            newNote.idNote = UUID().uuidString
-            
-            do {
-                try viewContext.save()
-            } catch {
-                let nsError = error as NSError
-                print("Unresolved error \(nsError.localizedDescription), \(nsError.userInfo)")
-//                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
         }
     }
 }

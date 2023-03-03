@@ -13,7 +13,7 @@ struct ListView: View {
     @State var isAddPresented = false
     var body: some View {
         ZStack {
-            CardsView(title: note.title!, date: note.date!, status: note.status!)
+            CardsView(title: note.title ?? "", date: note.date ?? Date.now, status: note.status ?? "")
             NavigationLink {
                 DetailNote(note: note, showGreeting: note.notif, showFinish: note.favoris)
         } label: {

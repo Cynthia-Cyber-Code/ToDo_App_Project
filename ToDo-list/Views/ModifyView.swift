@@ -23,8 +23,9 @@ struct ModifyView: View {
     @State var date: Date
     @State var order: Int64
     @State var status: Status
-//    @State var id: UUID
     @State var note: Note
+    
+    @ObservedObject var noteVM = TaskViewModel()
     
     var body: some View {
         VStack {
@@ -74,12 +75,12 @@ struct ModifyView: View {
             }
             
             Button {
-                autosave(note: note)
+               noteVM.autosave(note: note, title: title, status: status, date: date, description: description, viewContext: viewContext)
                 isAddPresented.toggle()
             } label: {
                 HStack{
                     Spacer()
-                    Text("Ajouter")
+                    Text("Ajout")
                         .padding()
                         .frame(width: 300)
                         .foregroundColor(.white)
@@ -88,26 +89,6 @@ struct ModifyView: View {
                 }
             }
             .listStyle(.plain)
-        }
-    }
-    func autosave(note: Note) {
-        withAnimation {
-            let updateTitle = self.title
-            let updateDesciption = self.description
-            let updateStatus = self.status.rawValue
-            let updateDateModified = self.date
-            viewContext.performAndWait {
-                note.title = updateTitle
-                note.descriptif = updateDesciption
-                note.status = updateStatus
-                note.date = updateDateModified
-                do {
-                    try viewContext.save()
-                    print("Note saved!")
-                } catch {
-                    print(error.localizedDescription)
-                }
-            }
         }
     }
 }

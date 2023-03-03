@@ -11,7 +11,7 @@ enum Tab: Int, Identifiable, CaseIterable, Comparable {
         lhs.rawValue < rhs.rawValue
     }
     
-    case all, wait, end, late
+    case all, wait, end
     
     internal var id: Int { rawValue }
     
@@ -23,8 +23,8 @@ enum Tab: Int, Identifiable, CaseIterable, Comparable {
             return "playpause.fill"
         case .end:
             return "calendar.badge.minus"
-        case .late:
-            return "repeat"
+//        case .late:
+//            return "repeat"
         }
     }
     
@@ -36,8 +36,8 @@ enum Tab: Int, Identifiable, CaseIterable, Comparable {
             return "wait"
         case .end:
             return "End"
-        case .late:
-            return "Late"
+//        case .late:
+//            return "Late"
         }
     }
     
@@ -49,8 +49,8 @@ enum Tab: Int, Identifiable, CaseIterable, Comparable {
             return .orange
         case .end:
             return .gray
-        case .late:
-            return .red
+//        case .late:
+//            return .red
         }
     }
 
@@ -59,6 +59,7 @@ enum Tab: Int, Identifiable, CaseIterable, Comparable {
 
 struct SelectButton: View {
     let tab: Tab
+    @Environment(\.colorScheme) var colorScheme
     @Binding var selectedTab: Tab
     var namespace: Namespace.ID
     @State private var selectedOffset: CGFloat = 0
@@ -94,7 +95,7 @@ struct SelectButton: View {
                 HStack(spacing: 10) {
                     Image(systemName: tab.icon)
                         .font(.system(size: 20, weight: .semibold, design: .rounded))
-                        .foregroundColor(isSelected ? tab.color : .black.opacity(0.6))
+                        .foregroundColor(isSelected ? tab.color : .gray)
                         .rotationEffect(.degrees(rotationAngle))
                         .scaleEffect(isSelected ? 1 : 0.9)
                         .animation(.easeInOut, value: rotationAngle)
@@ -103,12 +104,12 @@ struct SelectButton: View {
                         .padding(.horizontal, selectedTab != tab ? 10 : 0)
                         .offset(y: selectedOffset)
                         .animation(.default, value: selectedOffset)
-                    
-                    if isSelected {
-                        Text(tab.title)
-                            .font(.system(size: 20, weight: .semibold, design: .rounded))
-                            .foregroundColor(tab.color)
-                    }
+                   
+                        if isSelected {
+                            Text(tab.title)
+                                .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                .foregroundColor(tab.color)
+                        }
                 }
                 .padding(.vertical, 10)
             }
@@ -153,7 +154,11 @@ struct SelectBarView: View {
 }
 
 struct TabBar_Previews: PreviewProvider {
+    @State var selectedTab: Tab = .all
+    @Namespace var namespace
     static var previews: some View {
         SelectBarView(page: .all)
+        SelectBarView(page: .all)
+            .preferredColorScheme(.dark)
     }
 }

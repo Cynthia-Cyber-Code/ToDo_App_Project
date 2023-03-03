@@ -6,15 +6,17 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct DetailNote: View {
+    @Environment(\.presentationMode) var presentationMode
     @Environment(\.managedObjectContext) var viewContext
-       
+    @Environment(\.colorScheme) var colorScheme
+    
     @FetchRequest(entity: ListCheckMark.entity(), sortDescriptors: [ NSSortDescriptor(keyPath: \ListCheckMark.id_message, ascending: true), NSSortDescriptor(keyPath: \ListCheckMark.order, ascending: true)], animation: .default)
     var lists: FetchedResults<ListCheckMark>
     
     @State var isAddPresented = false
-//    @State var id : String
     @State var note: Note
     @State private var content: String = ""
     
@@ -22,42 +24,65 @@ struct DetailNote: View {
     
     @State var showFinish: Bool
     
+    @ObservedObject var noteVM = TaskViewModel()
+    @ObservedObject var stepVM = StepViewModel()
     
     var body: some View {
         VStack {
-            List {
-                Toggle("Finish", isOn: $showFinish)
-                    .toggleStyle(CheckboxStyle())
-                    .onChange(of: showFinish) { value in
-                        print(value)
-                        autosave(note: note)
-                        print(note.favoris)
-                    }.padding()
-                    .font(.title)
-                
-                
+            ZStack{
+                RoundedRectangle(cornerRadius: 20).frame(minHeight: 50, maxHeight: 200).foregroundColor(.orange.opacity(0.5))
                 VStack {
-                    Text("Notification will appear in \(note.date!.formatted(date: .abbreviated, time: .shortened))")
-                    Toggle("Schedule notification", isOn: $showGreeting).toggleStyle(SwitchToggleStyle(tint: .orange))
-                        .onChange(of: showGreeting) { value in
+                    Toggle("Finish", isOn: $showFinish)
+                        .toggleStyle(CheckboxStyle())
+                        .onChange(of: showFinish) { value in
                             print(value)
-                            scheduleNotification(title: note.title!, date: note.date!)
-                            autosave(note: note)
-                        }
+                            noteVM.autoBoolsave(note: note, showFinish: showFinish, showGreeting: showGreeting, viewContext: viewContext)
+                            print(note.favoris)
+                        }.padding()
+                        .font(.title)
+                    
+                    
+                    Text("Notification will appear in \((note.date ?? Date.now).formatted(date: .abbreviated, time: .shortened))")
+                    if (note.date! < Date.now || note.favoris == true) {
+                        
+                    } else {
+                        Toggle("Schedule notification", isOn: $showGreeting).toggleStyle(SwitchToggleStyle(tint: .orange))
+                            .onChange(of: showGreeting) { value in
+                                print(value)
+                                scheduleNotification(title: note.title!, date: note.date!)
+                                noteVM.autoBoolsave(note: note, showFinish: showFinish, showGreeting: showGreeting, viewContext: viewContext)
+                            }.padding()
+                    }
+                    
                 }
             }
+            HStack {
+                Text(note.title!)
+                Spacer()
+                Button {
+                    isAddPresented.toggle()
+                } label: {
+                    ZStack {
+                        Circle().foregroundColor(.orange).frame(width: 50, height: 50)
+                        Image(systemName: "rectangle.and.pencil.and.ellipsis").font(.body).foregroundColor(.white)
+                    }
+                }.sheet(isPresented: $isAddPresented) {
+                    ModifyView(isAddPresented: $isAddPresented, title: note.title!, description: note.descriptif!, date: note.date!, order: note.order, status: Status(rawValue: note.status!) ?? .normal, note: note)
+                }
+            }.padding()
+            Text(note.descriptif!)
             Spacer()
             HStack {
                 TextField("Add a step", text: $content)
                     .padding()
                     .frame(width: 300, height: 50)
-                    .background(Color(.black).opacity(0.05))
+                    .background(Color(colorScheme == .dark ? .white : .black).opacity(0.1))
                     .cornerRadius(15)
-                    .overlay(RoundedRectangle(cornerRadius: 15).stroke(lineWidth: 1).foregroundColor(Color.black.opacity(0.3)))
+                    .overlay(RoundedRectangle(cornerRadius: 15).stroke(lineWidth: 0.1).foregroundColor(colorScheme == .dark ? .white : .black))
                     .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
                 Button {
-                    addList()
+                    stepVM.step = stepVM.addStep(content: content, lists: lists, note: note, viewContext: viewContext)
                 } label: {
                     Image(systemName: "square.and.arrow.down.fill")
                         .padding()
@@ -65,20 +90,6 @@ struct DetailNote: View {
                         .foregroundColor(Color.white)
                 }
             }
-            HStack {
-                Text(note.title!).font(.title)
-                Spacer()
-                Button {
-                    isAddPresented.toggle()
-                } label: {
-                    ZStack {
-                        Circle().foregroundColor(.orange).frame(width: 70, height: 70)
-                        Image(systemName: "rectangle.and.pencil.and.ellipsis").font(.title).foregroundColor(.white)
-                    }
-                }.sheet(isPresented: $isAddPresented) {
-                    ModifyView(isAddPresented: $isAddPresented, title: note.title!, description: note.descriptif!, date: note.date!, order: note.order, status: Status(rawValue: note.status!) ?? .normal, note: note)
-                }
-            }.padding()
             if (lists.last != nil) {
                 List {
                     ForEach(lists, id: \.self) {
@@ -93,112 +104,45 @@ struct DetailNote: View {
                                 Text(checkMark.message!)
                             }
                         }
-                    }.onMove(perform: moveNotes)
-                        .onDelete(perform: deleteNotes)
+                    }.onMove(perform: { indexSet,arg  in
+                        stepVM.moveNotes(for: indexSet, destination: arg, lists: lists, viewContext: viewContext)
+                    })
+                    .onDelete(perform: { indexSet in
+                        stepVM.deleteSteps(for: indexSet, lists: lists, viewContext: viewContext)
+                    })
                 }
             } else {
                 Text("No Step Add").font(.title).foregroundColor(.gray)
             }
         }
         .padding(.horizontal)
+        .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .principal) {
-                ShareLink(item: note.title!, preview: SharePreview(note.title!))
-                }
-        }
-    }
-    private func autosave(note: Note) {
-        withAnimation {
-        let updateFinsh = self.showFinish
-        let updateNotif = self.showGreeting
-            viewContext.performAndWait {
-                note.favoris = updateFinsh
-                note.notif = updateNotif
-                do {
-                    guard viewContext.hasChanges else { return }
-                    try viewContext.save()
-                    print("Note saved!")
-                } catch {
-                    print(error.localizedDescription)
+                HStack {
+                    Button {
+                        self.presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        HStack {
+                            Image(systemName: "arrow.left.circle")
+                            Text("Tasks")
+                        }.foregroundColor(colorScheme == .dark ? .white : .black)
+                    }
+                    Spacer()
+                    Text(note.title!)
+                    Spacer()
+                    Spacer()
+                    ShareLink(item: note.title!, preview: SharePreview(Text("\(note.title!) \(note.date!.formatted(date: .abbreviated, time: .shortened)) "))) {
+                        Text("Share").foregroundColor(colorScheme == .dark ? .white : .black)
+                    }
                 }
             }
         }
     }
-    private func moveNotes(offsets: IndexSet, destination: Int) {
-        
-        let itemToMove = offsets.first!
-        withAnimation {
-            if itemToMove < destination {
-                var startIndex = itemToMove + 1
-                let endIndex = destination - 1
-                var startOrder = lists[itemToMove].order
-                
-                while startIndex <= endIndex {
-                    lists[startIndex].order = startOrder
-                    startOrder = startOrder + 1
-                    startIndex = startIndex + 1
-                }
-                lists[itemToMove].order = startOrder
-            } else if destination < itemToMove {
-                var startIndex = destination
-                let endIndex = itemToMove - 1
-                var startOrder = lists[destination].order + 1
-                let newOrder = lists[destination].order
-                
-                while startIndex <= endIndex {
-                    lists[startIndex].order = startOrder
-                    startOrder = startOrder + 1
-                    startIndex = startIndex + 1
-                }
-                lists[itemToMove].order = newOrder
-                
-            }
-            do {
-                try viewContext.save()
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-    }
-
-    private func deleteNotes(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { lists[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                let nsError = error as NSError
-                print("Unresolved error \(nsError.localizedDescription), \(nsError.userInfo)")
-//                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-    func addList() {
-          withAnimation {
-              let newListCheckMark = ListCheckMark(context: viewContext)
-              newListCheckMark.message = content
-              if (lists.last == nil)
-              {
-                  newListCheckMark.order = 0
-              } else {
-                  newListCheckMark.order = lists.last!.order + 1
-              }
-              newListCheckMark.activeCheckMark = false
-              newListCheckMark.idTask = note.idNote
-              do {
-                  try viewContext.save()
-              } catch {
-                  let nsError = error as NSError
-                  print(nsError.localizedDescription)
-//                  fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-              }
-          }
-      }
 }
 
 //struct DetailNote_Previews: PreviewProvider {
 //    static var previews: some View {
-//        DetailNote(note: Note(), showGreeting: true, showFinish: true).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).preferredColorScheme(.dark)
+//        DetailNote(, showGreeting: false, showFinish: false).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).preferredColorScheme(.dark)
 //    }
 //}

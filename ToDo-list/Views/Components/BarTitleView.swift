@@ -8,12 +8,17 @@
 import SwiftUI
 
 struct BarTitleView: View {
+    @Environment(\.colorScheme) var colorScheme
     var body: some View {
         HStack {
             Spacer()
-            Text("To-Do list").font(.title).fontWeight(.bold)
+            Text(" To-Do list").font(.title).fontWeight(.bold)
             Spacer()
-            EditButton().fontWeight(.thin).foregroundColor(.black)
+            if (colorScheme == .dark) {
+                EditButton().foregroundColor(.white).font(.title)
+            } else {
+                EditButton().foregroundColor(.black).font(.title)
+            }
         }.padding()
     }
 }
@@ -21,5 +26,6 @@ struct BarTitleView: View {
 struct BarTitleView_Previews: PreviewProvider {
     static var previews: some View {
         BarTitleView()
+        BarTitleView().preferredColorScheme(.dark)
     }
 }

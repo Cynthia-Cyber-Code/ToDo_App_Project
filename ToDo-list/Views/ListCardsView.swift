@@ -14,109 +14,65 @@ struct ListCardsView: View {
     @FetchRequest(entity: Note.entity(), sortDescriptors: [ NSSortDescriptor(keyPath: \Note.order, ascending: true)], animation: .default)
     
     var notes: FetchedResults<Note>
+    @ObservedObject var noteVM = TaskViewModel()
     @State var selectedTab: Tab = .all
     @Namespace var namespace
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
-                List {
                     HStack {
                         ForEach(Tab.allCases) { tab in
-                            SelectButton(tab: tab, selectedTab: $selectedTab, namespace: namespace)
+                            SelectButton(tab: tab, selectedTab: $selectedTab, namespace: namespace).frame(height: 70)
+                                .shadow(radius: 30)
                         }
                     }
                     .padding(.top, 150.0)
-                    
+                List {
                     if selectedTab == .all {
-                        ForEach(notes, id: \.self) { note in
+                        ForEach(notes, id:\.self) { note in
                             ListView(note: note)
                         }
-                        .onMove(perform: moveNotes)
-                        .onDelete(perform: deleteNotes)
+                        .onMove(perform: { indexSetMove,arg   in
+                            noteVM.moveNotes(for: indexSetMove, destination: arg, notes: notes, viewContext: viewContext)
+                        })
+                        .onDelete(perform: { indexSet in
+                            noteVM.deleteNotes(for: indexSet, notes: notes, viewContext: viewContext)
+                        })
                     } else if selectedTab == .end {
                         ForEach(notes) { note in
                             if note.favoris == true {
                                 ListView(note: note)
                             }
-                        }.onMove(perform: moveNotes)
-                            .onDelete(perform: deleteNotes)
+                        }.onMove(perform: { indexSetMove,arg  in
+                            noteVM.moveNotes(for: indexSetMove, destination: arg, notes: notes, viewContext: viewContext)
+                        })
+                            .onDelete(perform: { indexSet in
+                                noteVM.deleteNotes(for: indexSet, notes: notes, viewContext: viewContext)
+                            })
                     } else if selectedTab == .wait {
                         ForEach(notes) { note in
-                            if (note.date! <= Date.now && note.favoris == false) {
+                            if (note.favoris == false) {
                                 ListView(note: note)
                             }
-                        }.onMove(perform: moveNotes)
-                            .onDelete(perform: deleteNotes)
-                    } else if selectedTab == .late {
-                        ForEach(notes) { note in
-                            if note.date! > Date.now {
-                                ListView( note: note)
-                            }
-                        }.onMove(perform: moveNotes)
-                        .onDelete(perform: deleteNotes)
-                    } else {
-                        EmptyView()
+                        }.onMove(perform: { indexSet,arg  in
+                            noteVM.moveNotes(for: indexSet, destination: arg, notes: notes, viewContext: viewContext)
+                        })
+                            .onDelete(perform: { indexSet in
+                                noteVM.deleteNotes(for: indexSet, notes: notes, viewContext: viewContext)
+                            })
                     }
-                }.id(UUID()).padding()
+                    
+                }.id(UUID().uuidString).padding()
                 .listStyle(.plain)
                 .toolbar {
                     ToolbarItem(placement: .principal) {
-                           BarTitleView()
+                        BarTitleView()
                     }
                 }
                 ButtonAdd()
-                .navigationBarTitle("Tasks")
-            }.ignoresSafeArea()
-        }
-    }
-    private func moveNotes(offsets: IndexSet, destination: Int) {
-        
-        let itemToMove = offsets.first!
-        withAnimation {
-            if itemToMove < destination {
-                var startIndex = itemToMove + 1
-                let endIndex = destination - 1
-                var startOrder = notes[itemToMove].order
-                
-                while startIndex <= endIndex {
-                    notes[startIndex].order = startOrder
-                    startOrder = startOrder + 1
-                    startIndex = startIndex + 1
-                }
-                notes[itemToMove].order = startOrder
-            } else if destination < itemToMove {
-                var startIndex = destination
-                let endIndex = itemToMove - 1
-                var startOrder = notes[destination].order + 1
-                let newOrder = notes[destination].order
-                
-                while startIndex <= endIndex {
-                    notes[startIndex].order = startOrder
-                    startOrder = startOrder + 1
-                    startIndex = startIndex + 1
-                }
-                notes[itemToMove].order = newOrder
-                
             }
-            do {
-                try viewContext.save()
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-    }
-
-    private func deleteNotes(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { notes[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                let nsError = error as NSError
-                print("Unresolved error \(nsError.localizedDescription), \(nsError.userInfo)")
-//                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
+            .navigationBarTitle("Tasks")
+            .ignoresSafeArea()
         }
     }
 }

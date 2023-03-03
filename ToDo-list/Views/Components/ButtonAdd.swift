@@ -23,7 +23,6 @@ struct ButtonAdd: View {
             AddNoteView( isAddPresented: $isAddPresented)
         }
         .padding()
-        Spacer()
     }
 }
 
