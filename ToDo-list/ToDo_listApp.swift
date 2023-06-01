@@ -21,7 +21,6 @@ struct ToDo_listApp: App {
     var body: some Scene {
         WindowGroup {
             ListCardsView()
-                .onAppear() {}
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

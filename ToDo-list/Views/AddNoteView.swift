@@ -85,52 +85,14 @@ struct AddNoteView: View {
                         }.padding()
                     }
                 }.padding()
-                
-//                HStack {
-//                    TextField("Add a step", text: $content)
-//                        .padding()
-//                        .frame(width: 270, height: 50)
-//                        .background(Color(.black).opacity(0.05))
-//                        .cornerRadius(15)
-//                        .overlay(RoundedRectangle(cornerRadius: 15).stroke(lineWidth: 1).foregroundColor(Color.black.opacity(0.3)))
-//                        .textInputAutocapitalization(.never)
-//                        .disableAutocorrection(true)
-//                    Button {
-//                        addList()
-//                    } label: {
-//                        Image(systemName: "square.and.arrow.down.fill")
-//                            .padding()
-//                            .background(Color(.orange).opacity(0.9).cornerRadius(15))
-//                            .foregroundColor(Color.white)
-//                    }
-//                }
-//                if (lists.last != nil) {
-//                    List {
-//                        ForEach(lists, id: \.self) {
-//                            checkMark in
-//                            if Note(context: viewContext).idNote == checkMark.idTask {
-//                                HStack {
-//                                    Image(systemName: checkMark.activeCheckMark ? "checkmark.square.fill" : "square").font(.title)
-//                                        .foregroundColor(checkMark.activeCheckMark ? Color(.orange) : Color.secondary)
-//                                        .onTapGesture {
-//                                            checkMark.activeCheckMark.toggle()
-//                                        }
-//                                    Text(checkMark.message!)
-//                                }
-//                            }
-//                        }.onMove(perform: moveNotes)
-//                        .onDelete(perform: deleteNotes)
-//                    }
-//                } else {
-//                    Text("No Step Add").font(.title).foregroundColor(.gray)
-//                }
             }
             Button {
-                if (title == "" || description == "" || date == Date() || status.rawValue == ""){
-//                    color = .gray
-                } else {
-//                    color = .orange
+                if (title != "" && description != "" && date != Date() && status.rawValue != "") {
                     noteVM.note = noteVM.addTask(title: title, notes: notes, status: status, date: date, description: description, vc: viewContext)
+                    if (!(date < Date.now)) {
+                        noteVM.scheduleNotification(title: title, date: date)
+                        noteVM.autoBoolsave(note: noteVM.note, showFinish: false, showGreeting: true, viewContext: viewContext)
+                    }
                     isAddPresented.toggle()
                 }
             } label: {

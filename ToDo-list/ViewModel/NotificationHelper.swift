@@ -18,23 +18,3 @@ class NotificationHelper {
         return Calendar.current.dateComponents([.timeZone, .year, .month, .day, .hour, .minute, .second], from: triggerDate)
     }
 }
-
-func scheduleNotification(title: String, date: Date) {
-    let notificationId = UUID()
-    let content = UNMutableNotificationContent()
-    content.body = "\(title) at \(date.formatted(date: .abbreviated, time: .standard))"
-    content.sound = UNNotificationSound.default
-    content.userInfo = [
-        "notificationId": "\(notificationId)"
-    ]
-
-    let trigger = UNCalendarNotificationTrigger(
-        dateMatching: NotificationHelper.getTriggerDate(date: date)!,
-            repeats: false
-    )
-
-    notificationManager.scheduleNotification(
-            id: "\(notificationId)",
-            content: content,
-            trigger: trigger)
-}

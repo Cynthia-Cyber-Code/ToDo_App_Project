@@ -162,6 +162,33 @@ struct CheckboxStyle: ToggleStyle {
             }
         }
     }
+    func scheduleNotification(title: String, date: Date) {
+        let notificationId = UUID()
+        let content = UNMutableNotificationContent()
+        content.body = "\(title) at \(date.formatted(date: .abbreviated, time: .standard))"
+        content.sound = UNNotificationSound.default
+        content.userInfo = [
+            "notificationId": "\(notificationId)"
+        ]
+
+        let trigger = UNCalendarNotificationTrigger(
+            dateMatching: NotificationHelper.getTriggerDate(date: date)!,
+                repeats: false
+        )
+
+        notificationManager.scheduleNotification(
+                id: "\(notificationId)",
+                content: content,
+                trigger: trigger)
+    }
+    func removePendingNotification(id: String) {
+        let notificationId = id
+        let center = UNUserNotificationCenter.current()
+        center.removeDeliveredNotifications(withIdentifiers: [notificationId])
+        center.removePendingNotificationRequests(withIdentifiers: [notificationId])
+
+        notificationManager.removePendingNotification(id: notificationId)
+    }
 }
 
 

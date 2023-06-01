@@ -13,7 +13,7 @@ struct DetailNote: View {
     @Environment(\.managedObjectContext) var viewContext
     @Environment(\.colorScheme) var colorScheme
     
-    @FetchRequest(entity: ListCheckMark.entity(), sortDescriptors: [ NSSortDescriptor(keyPath: \ListCheckMark.id_message, ascending: true), NSSortDescriptor(keyPath: \ListCheckMark.order, ascending: true)], animation: .default)
+    @FetchRequest(entity: ListCheckMark.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \ListCheckMark.id_message, ascending: true), NSSortDescriptor(keyPath: \ListCheckMark.order, ascending: true)], animation: .default)
     var lists: FetchedResults<ListCheckMark>
     
     @State var isAddPresented = false
@@ -35,21 +35,27 @@ struct DetailNote: View {
                     Toggle("Finish", isOn: $showFinish)
                         .toggleStyle(CheckboxStyle())
                         .onChange(of: showFinish) { value in
-                            print(value)
-                            noteVM.autoBoolsave(note: note, showFinish: showFinish, showGreeting: showGreeting, viewContext: viewContext)
+                            print("showfinish \(value)")
+                            noteVM.autoBoolsave(note: note, showFinish: showFinish, showGreeting: false, viewContext: viewContext)
                             print(note.favoris)
                         }.padding()
                         .font(.title)
                     
                     
-                    Text("Notification will appear in \((note.date ?? Date.now).formatted(date: .abbreviated, time: .shortened))")
+                    Text("Notification will appear in \((note.date!).formatted(date: .abbreviated, time: .shortened))")
                     if (note.date! < Date.now || note.favoris == true) {
-                        
+
                     } else {
                         Toggle("Schedule notification", isOn: $showGreeting).toggleStyle(SwitchToggleStyle(tint: .orange))
                             .onChange(of: showGreeting) { value in
+                                if (showGreeting == true) {
+                                    noteVM.scheduleNotification(title: note.title!, date: note.date!)
+                                    print(value)
+                                } else {
+                                    noteVM.removePendingNotification(id: note.idNote!)
+                                    print(value)
+                                }
                                 print(value)
-                                scheduleNotification(title: note.title!, date: note.date!)
                                 noteVM.autoBoolsave(note: note, showFinish: showFinish, showGreeting: showGreeting, viewContext: viewContext)
                             }.padding()
                     }
