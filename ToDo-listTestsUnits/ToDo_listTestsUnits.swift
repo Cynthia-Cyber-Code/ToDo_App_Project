@@ -43,32 +43,10 @@ final class ToDo_listTestsUnits: XCTestCase {
 
     func testMoveNotesCoreData() throws {
         
-//        viewModel.moveNotes(for: IndexSet(integer: 1), destination: 0, notes: notes, viewContext: viewContext)
-//
-//        print(moveTask)
     }
     
     func testDeleteNotesCoreData() throws {
-//        let title = "Title"
-//        let date = Date.now
-//        let content = "Test description 1"
-//
-//        let task = viewModel.addTask(title: title, notes: notes, status: Status.priority, date: date, description: content, vc: viewContext)
-//
-//        XCTAssertEqual(task.title, title)
-//        XCTAssertEqual(task.status, Status.priority.rawValue)
-//        XCTAssertEqual(task.date, date)
-//        XCTAssertEqual(task.descriptif, content)
-//
-//        print("success task: \(task)")
         
-//        let notesCount = notes.count
-//        let index = IndexSet(integer: notes.count)
-//
-//        viewModel.deleteNotes(for: indexSet, notes: notes, viewContext: viewContext)
-//
-//        XCTAssertEqual(notes.count, notesCount - 1)
-//        print("success delete \(notes.count - 1) \(notesCount - 1)")
     }
     
     func testModifyNotesCoreData() throws {

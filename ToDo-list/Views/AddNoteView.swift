@@ -89,8 +89,11 @@ struct AddNoteView: View {
             Button {
                 if (title != "" && description != "" && date != Date() && status.rawValue != "") {
                     noteVM.note = noteVM.addTask(title: title, notes: notes, status: status, date: date, description: description, vc: viewContext)
-                    if (!(date < Date.now)) {
-                        noteVM.scheduleNotification(title: title, date: date)
+                    if (date < Date.now) {
+                        noteVM.note.idNotif = ""
+                        noteVM.autoBoolsave(note: noteVM.note, showFinish: true, showGreeting: false, viewContext: viewContext)
+                    } else {
+                        noteVM.note.idNotif = noteVM.scheduleNotification(title: title, date: date)
                         noteVM.autoBoolsave(note: noteVM.note, showFinish: false, showGreeting: true, viewContext: viewContext)
                     }
                     isAddPresented.toggle()

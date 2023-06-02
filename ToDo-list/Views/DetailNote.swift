@@ -36,6 +36,11 @@ struct DetailNote: View {
                         .toggleStyle(CheckboxStyle())
                         .onChange(of: showFinish) { value in
                             print("showfinish \(value)")
+                            if (showFinish == false) {
+                                note.idNotif = noteVM.scheduleNotification(title: note.title!, date: note.date!)
+                            } else {
+                                noteVM.removePendingNotification(id: note.idNotif!)
+                            }
                             noteVM.autoBoolsave(note: note, showFinish: showFinish, showGreeting: false, viewContext: viewContext)
                             print(note.favoris)
                         }.padding()
@@ -44,15 +49,15 @@ struct DetailNote: View {
                     
                     Text("Notification will appear in \((note.date!).formatted(date: .abbreviated, time: .shortened))")
                     if (note.date! < Date.now || note.favoris == true) {
-
+                        
                     } else {
                         Toggle("Schedule notification", isOn: $showGreeting).toggleStyle(SwitchToggleStyle(tint: .orange))
                             .onChange(of: showGreeting) { value in
-                                if (showGreeting == true) {
-                                    noteVM.scheduleNotification(title: note.title!, date: note.date!)
+                                if (showGreeting == true ) {
+                                    note.idNotif = noteVM.scheduleNotification(title: note.title!, date: note.date!)
                                     print(value)
                                 } else {
-                                    noteVM.removePendingNotification(id: note.idNote!)
+                                    noteVM.removePendingNotification(id: note.idNotif!)
                                     print(value)
                                 }
                                 print(value)
@@ -149,6 +154,6 @@ struct DetailNote: View {
 
 //struct DetailNote_Previews: PreviewProvider {
 //    static var previews: some View {
-//        DetailNote(, showGreeting: false, showFinish: false).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).preferredColorScheme(.dark)
+//        DetailNote(note: Note(), showGreeting: false, showFinish: false).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).preferredColorScheme(.dark)
 //    }
 //}

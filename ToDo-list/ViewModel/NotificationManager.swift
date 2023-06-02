@@ -36,6 +36,7 @@ class NotificationManager: NSObject, UNUserNotificationCenterDelegate, INotifica
     }
 
     func removePendingNotification(id: String) {
+        notificationCenter.removeDeliveredNotifications(withIdentifiers: [id])
         notificationCenter.removePendingNotificationRequests(withIdentifiers: [id])
     }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22C65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22E261" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ListCheckMark" representedClassName="ListCheckMark" syncable="YES" codeGenerationType="class">
         <attribute name="activeCheckMark" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="id_message" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
@@ -12,6 +12,7 @@
         <attribute name="descriptif" optional="YES" attributeType="String"/>
         <attribute name="favoris" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="idNote" optional="YES" attributeType="String"/>
+        <attribute name="idNotif" optional="YES" attributeType="String"/>
         <attribute name="notif" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="order" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="status" optional="YES" attributeType="String"/>

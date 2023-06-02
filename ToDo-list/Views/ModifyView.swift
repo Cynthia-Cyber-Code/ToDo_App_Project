@@ -76,6 +76,7 @@ struct ModifyView: View {
             
             Button {
                noteVM.autosave(note: note, title: title, status: status, date: date, description: description, viewContext: viewContext)
+                noteVM.autoBoolsave(note: note, showFinish: false, showGreeting: true, viewContext: viewContext)
                 isAddPresented.toggle()
             } label: {
                 HStack{

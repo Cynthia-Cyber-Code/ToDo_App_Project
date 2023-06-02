@@ -9,11 +9,11 @@ import CoreData
 
 struct PersistenceController {
     static let shared = PersistenceController()
-
+    
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-//        for _ in 0..<10 {
+        
         let newNote = Note(context: viewContext)
         newNote.idNote = UUID().uuidString
         newNote.timestamp = Date()
@@ -31,8 +31,6 @@ struct PersistenceController {
         newList.activeCheckMark = false
         newList.message = ""
         
-        
-//        }
         do {
             try viewContext.save()
         } catch {
@@ -41,21 +39,24 @@ struct PersistenceController {
         }
         return result
     }()
-
-    let container: NSPersistentContainer
-
+    
+    let container: NSPersistentCloudKitContainer
+//    let options = NSPersistentCloudKitContainerSchemaInitializationOptions()
+    
     init(inMemory: Bool = false) {
-        container = NSPersistentContainer(name: "ToDo_list")
+        container = NSPersistentCloudKitContainer(name: "ToDo_list")
+//        try? container.initializeCloudKitSchema(options: options)
+//                container = NSPersistentCloudKitContainer(name: "ToDo_list")
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 print(error.localizedDescription)
-//                fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
+        container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
     }
 }
 
