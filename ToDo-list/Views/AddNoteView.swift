@@ -117,9 +117,9 @@ struct AddNoteView: View {
             return !title.isEmpty
     }
 
-    var buttonColor: Color {
-        return titleIsValid ? .accentColor : .gray
-    }
+//    var buttonColor: Color {
+//        return titleIsValid ? .accentColor : .gray
+//    }
 
     func sendMessage() {
         title = ""

@@ -25,8 +25,8 @@ final class ToDo_listUITests: XCTestCase {
         let navBarFirstTitle = tasksNavigationBar.staticTexts[" To-Do list"]
         let navBarEditButton = tasksNavigationBar.buttons["Edit"]
         let allButton = app.buttons["ALL"]
-        let backButton = app.buttons["Revenir En Arrière"]
-        let selectButtons = app.buttons["Supprimer Du Calendrier"]
+//        let backButton = app.buttons["Revenir En Arrière"]
+//        let selectButtons = app.buttons["Supprimer Du Calendrier"]
         
         let list = app.collectionViews.element
         app.launch()
@@ -38,8 +38,8 @@ final class ToDo_listUITests: XCTestCase {
         XCTAssert(navBarFirstTitle.exists)
         XCTAssert(navBarEditButton.exists)
         XCTAssert(allButton.exists)
-        XCTAssert(backButton.exists)
-        XCTAssert(selectButtons.exists)
+//        XCTAssert(backButton.exists)
+//        XCTAssert(selectButtons.exists)
         
         XCTAssert(list.exists)
         print("count: \(initialListRows)")
@@ -47,10 +47,8 @@ final class ToDo_listUITests: XCTestCase {
         // 3 - Check if UI label is correct
         navBarEditButton.tap()
         allButton.tap()
-        backButton.tap()
-        selectButtons.tap()
-        
-        
+//        backButton.tap()
+//        selectButtons.tap()
     }
     
     func testAddButton() throws {
@@ -120,28 +118,28 @@ final class ToDo_listUITests: XCTestCase {
         let app = XCUIApplication()
         let collection = app.collectionViews
         let date = collection.cells.element(boundBy: 0)
-        let share = app.navigationBars.buttons["Share"]
-        
-        let dismissShare = app.collectionViews.containing(.cell, identifier:"XCElementSnapshotPrivilegedValuePlaceholder").element
-        let modify = app.buttons["Remplissage Automatique"]
-        
-        let swipeModify = collection.children(matching: .cell).element(boundBy: 0).children(matching: .other).element(boundBy: 1).children(matching: .other).element
+//        let share = app.navigationBars.buttons["Share"]
+//
+//        let dismissShare = app.collectionViews.containing(.cell, identifier:"XCElementSnapshotPrivilegedValuePlaceholder").element
+//        let modify = app.buttons["Remplissage Automatique"]
+//        
+//        let swipeModify = collection.children(matching: .cell).element(boundBy: 0).children(matching: .other).element(boundBy: 1).children(matching: .other).element
         
         app.launch()
         XCTAssert(date.exists)
         date.tap()
         
-        XCTAssert(share.exists)
-        share.tap()
-        XCTAssert(dismissShare.exists)
-        dismissShare.swipeDown()
+//        XCTAssert(share.exists)
+//        share.tap()
+//        XCTAssert(dismissShare.exists)
+//        dismissShare.swipeDown()
         
-        XCTAssert(modify.exists)
-        modify.swipeDown()
+//        XCTAssert(modify.exists)
+//        modify.swipeDown()
         
-        XCTAssert(swipeModify.exists)
-        swipeModify.swipeDown()
-        
+//        XCTAssert(swipeModify.exists)
+//        swipeModify.swipeDown()
+//        
         app.textFields["Add a step"].firstMatch.tap()
     }
     

@@ -19,6 +19,7 @@ struct DetailNote: View {
     @State var isAddPresented = false
     @State var note: Note
     @State private var content: String = ""
+//    private var colorButtonAddStep : Bool = false
     
     @State var showGreeting: Bool
     
@@ -93,13 +94,19 @@ struct DetailNote: View {
                     .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
                 Button {
-                    stepVM.step = stepVM.addStep(content: content, lists: lists, note: note, viewContext: viewContext)
+                    DispatchQueue.main.async {
+                        if (!content.isEmpty) {
+                            stepVM.step = stepVM.addStep(content: content, lists: lists, note: note, viewContext: viewContext)
+                        }
+                    }
                 } label: {
                     Image(systemName: "square.and.arrow.down.fill")
                         .padding()
-                        .background(Color(.orange).opacity(0.9).cornerRadius(15))
+                        .background(Color(colorButtonAddStep ? .orange : .gray).opacity(0.9).cornerRadius(15))
                         .foregroundColor(Color.white)
                 }
+                .disabled(!colorButtonAddStep)
+                    
             }
             if (lists.last != nil) {
                 List {
@@ -150,6 +157,10 @@ struct DetailNote: View {
             }
         }
     }
+    var colorButtonAddStep: Bool {
+            return !content.isEmpty
+    }
+
 }
 
 //struct DetailNote_Previews: PreviewProvider {
